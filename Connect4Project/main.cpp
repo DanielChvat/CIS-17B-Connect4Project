@@ -21,8 +21,7 @@ using namespace std;
 int main(int argc, char** argv) {
 
     cout << "Hello World" << endl;
-    for(;;){
-}
+    cout << "Test In Board Class" << endl;
     return 0;
 }
 
