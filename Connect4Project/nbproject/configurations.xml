@@ -6,7 +6,9 @@
                    projectFiles="true">
       <itemPath>Admin.h</itemPath>
       <itemPath>Board.h</itemPath>
+      <itemPath>Chip.h</itemPath>
       <itemPath>Computer.h</itemPath>
+      <itemPath>Database.h</itemPath>
       <itemPath>Game.h</itemPath>
       <itemPath>Menu.h</itemPath>
       <itemPath>User.h</itemPath>
@@ -20,7 +22,9 @@
                    projectFiles="true">
       <itemPath>Admin.cpp</itemPath>
       <itemPath>Board.cpp</itemPath>
+      <itemPath>Chip.cpp</itemPath>
       <itemPath>Computer.cpp</itemPath>
+      <itemPath>Database.cpp</itemPath>
       <itemPath>Game.cpp</itemPath>
       <itemPath>Menu.cpp</itemPath>
       <itemPath>User.cpp</itemPath>
@@ -56,9 +60,17 @@
       </item>
       <item path="Board.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Chip.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Chip.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Computer.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Computer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Database.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Database.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Game.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -103,9 +115,17 @@
       </item>
       <item path="Board.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Chip.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Chip.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Computer.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Computer.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="Database.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Database.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Game.cpp" ex="false" tool="1" flavor2="0">
       </item>
