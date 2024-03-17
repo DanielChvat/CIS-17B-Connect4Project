@@ -9,17 +9,25 @@
  *
  * Created on March 16, 2024, 6:01 PM
  */
+#include "Chip.h"
 
 #ifndef PLAYER_H
 #define PLAYER_H
 
+using namespace std;
+
 class Player {
+    private:
+    Chip chip; 
+    
 public:
     Player();
     Player(const Player& orig);
     virtual ~Player();
-private:
 
+    int tkTurn();
+    
+    
 };
 
 #endif /* PLAYER_H */

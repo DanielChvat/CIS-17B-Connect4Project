@@ -12,15 +12,15 @@
 
 class Game {
 private:
-    Board b;
-    Player p;
-    Computer c;
+//    Board b;
+//    Player p;
+//    Computer c;
     
-    enum class GameState = {"playerTurn" , "compTurn"};
+  //  enum class GameState = {"playerTurn" , "compTurn"};
     
   public:
     Game();
-    
+    Game(const Game& orig) ;
     virtual ~Game();    
     
     void runGame();

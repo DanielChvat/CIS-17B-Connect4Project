@@ -13,6 +13,8 @@
 #include "Chip.h"
 
 Chip::Chip() {
+    this->color='P';
+    
 }
 
 Chip::Chip(const Chip& orig) {
@@ -21,3 +23,7 @@ Chip::Chip(const Chip& orig) {
 Chip::~Chip() {
 }
 
+// Function that returns the chip color
+char Chip::getChip(){
+    return this->color;
+}

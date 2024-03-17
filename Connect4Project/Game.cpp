@@ -22,8 +22,8 @@ Game::~Game() {
 }
 
 // Function to run game
-Game::runGame(){
-    
+void::Game::runGame(){
+
     /*
  
      * 
@@ -49,6 +49,6 @@ Game::runGame(){
      * 
      */
          
-     */
+    
     
 }

@@ -1,7 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/cppFiles/class.h to edit this template
- */
+
+
 
 /* 
  * File:   Board.h
@@ -13,14 +11,36 @@
 #ifndef BOARD_H
 #define BOARD_H
 
+#include "Chip.h"
+
+#include <iostream>
+
+using namespace std;
+
 class Board {
+
+private:
+    char **board;
+    int connect;
+    int rows;
+    int cols;
+    
+
 public:
     Board();
-    Board(const Board& orig);
+    Board(int r, int c,int mode );
+   
+    void displayBoard()const;
+    
+    char **getBoard();
+    
+    // function to check winner: needs to check horizontal, vertical and diagonal. Return type and Parameters?
+    
+    // function to place the chips or take turns : which ever makes more sense. Return type? and Parameters?
+    
+    void plChip(int col, Chip &chip);
+    
     virtual ~Board();
-private:
-
 };
 
 #endif /* BOARD_H */
-
