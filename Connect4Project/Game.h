@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/cppFiles/class.h to edit this template
- */
+
 
 /* 
  * File:   Game.h
@@ -14,12 +11,20 @@
 #define GAME_H
 
 class Game {
-public:
-    Game();
-    Game(const Game& orig);
-    virtual ~Game();
 private:
-
+    Board b;
+    Player p;
+    Computer c;
+    
+    enum class GameState = {"playerTurn" , "compTurn"};
+    
+  public:
+    Game();
+    
+    virtual ~Game();    
+    
+    void runGame();
+    
 };
 
 #endif /* GAME_H */

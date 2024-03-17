@@ -21,3 +21,34 @@ Game::Game(const Game& orig) {
 Game::~Game() {
 }
 
+// Function to run game
+Game::runGame(){
+    
+    /*
+ 
+     * 
+     *  // game function calls the Player class functions;
+     * 
+     * 
+     * 
+     *      while (there is not a winner and board has space or no tie){
+     *          
+     *          switch (gameState):
+     *          case(1)
+     *  
+     *              game.player.getColumn()-> call the player function that does the same thing;
+     *              
+     *              
+     *      
+     *      }
+     * }
+     * 
+     *  
+     * 
+     * 
+     * 
+     */
+         
+     */
+    
+}
