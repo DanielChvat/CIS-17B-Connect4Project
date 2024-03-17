@@ -17,6 +17,8 @@
 
 using namespace std;
 
+/* 3/16/24 Noel Perez
+ */
 class Board {
 
 private:
@@ -33,12 +35,13 @@ public:
     void displayBoard()const;
     
     char **getBoard();
+   
+    bool valPlace(int col);
     
-    // function to check winner: needs to check horizontal, vertical and diagonal. Return type and Parameters?
+    char chkWin();
     
-    // function to place the chips or take turns : which ever makes more sense. Return type? and Parameters?
-    
-    void plChip(int col, Chip &chip);
+    //void plChip(int col, Chip  &chip);
+    void plChip(int col, const Chip& chip);
     
     virtual ~Board();
 };

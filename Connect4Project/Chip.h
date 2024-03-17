@@ -10,16 +10,19 @@
 #ifndef CHIP_H
 #define CHIP_H
 
+/* 3/16/24 Noel Perez
+ */
 class Chip {
 private:
     char color;
     
-    public:
+public:
     Chip();
-    Chip(const Chip& orig);
+    Chip(char c);
+  
     virtual ~Chip();
 public: 
-    char getChip();
+    char getColor() const ;
     
 };
 

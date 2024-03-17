@@ -10,17 +10,21 @@
 #ifndef GAME_H
 #define GAME_H
 
+#include "Board.h"
+#include "Player.h"
+#include "Computer.h"
+
 class Game {
 private:
-//    Board b;
-//    Player p;
+   // Board b;
+   // Player p;
 //    Computer c;
     
   //  enum class GameState = {"playerTurn" , "compTurn"};
     
   public:
     Game();
-    Game(const Game& orig) ;
+ 
     virtual ~Game();    
     
     void runGame();

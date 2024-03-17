@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/cppFiles/class.h to edit this template
- */
 
 /* 
  * File:   Player.h
@@ -16,18 +12,24 @@
 
 using namespace std;
 
+/* 3/16/24 Noel Perez
+ */
 class Player {
     private:
     Chip chip; 
     
 public:
     Player();
-    Player(const Player& orig);
+  
+//    Player( Chip c);
+    
+    Player(const Chip &c);
+    
     virtual ~Player();
 
-    int tkTurn();
+    int tkTurn(int cols);
     
-    
+    Chip getChip()const ;
 };
 
 #endif /* PLAYER_H */

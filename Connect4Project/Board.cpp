@@ -1,6 +1,4 @@
 
-
-
 /* 
  * File:   Board.cpp
  * Author: Daniel
@@ -8,16 +6,20 @@
  * Created on March 8, 2024, 11:28 AM
  */
 /*
- Notes: Connect 4(r x c): 6 x 7
+ * Current implementation can handle these configurations:
+ *      Connect 4(r x c): 6 x 7
  *      Connect 5(r x c): 7 x 8
  *      Connect 6(r x c): 8 x 9
- *       
+ *      Connect 7(r x c): 9 x 10
+ * Any larger and board would need to be reformatted for displaying purposes 
+ * the game logic as is can handle ANY size board and any connect mode!!!!
  */
 #include "Board.h"
 #include <iomanip>
 using namespace std;
 /*
  3 param constructor: 
+ *  3/16/24 Noel Perez
  */
 Board::Board(int r, int c, int mode){
     this->connect =mode;
@@ -35,6 +37,8 @@ Board::Board(int r, int c, int mode){
 }
     
 // Destructor
+/* 3/16/24 Noel Perez
+ */
 Board::~Board() {
     for (int i =0; i < rows; i++){
         delete []board[i];
@@ -43,6 +47,8 @@ Board::~Board() {
 }
 
 // Function to display board dynamically based on mode 
+/* 3/16/24 Noel Perez
+ */
 void Board::displayBoard() const {
     cout << "\n";
     for (int i = 0; i < rows; i++) {
@@ -71,16 +77,102 @@ void Board::displayBoard() const {
   
 }
  // Get board function: return the board in its current state
+/* 3/16/24 Noel Perez
+ */
  char**::Board::getBoard(){
      return board; 
  }
 
- void::Board::plChip(int col, Chip &chip ){
+// Function definition for placing chip in column  
+ /* 3/16/24 Noel Perez
+ */
+ void::Board::plChip(int column, const Chip& chip) {
      
-     char **temp = this->getBoard();
+     --column;
+
+        for (int i = rows - 1; i >= 0; i--) {
+            if (board[i][column] == ' ') {
+                board[i][column] = chip.getColor();
+                break;
+            }
+        }
+    }
      
-     cout<<"82: "<<chip.getChip()<<endl;
-     
-     temp[1][col] = chip.getChip();
-     
+ 
+ // Function definition for validating column placement
+ /* 3/16/24 Noel Perez
+ */
+ bool::Board::valPlace(int column ){
+     --column;
+    while (column < 0 || column >= cols || board[0][column] != ' ') {
+        cout << "Invalid column selection. Please enter a valid column number"<<" (1-"<<this->cols<<"): ";
+        cin >> column;
+    }
+    return true; 
  }
+ 
+/* 3/16/24 Noel Perez
+ * Function to check board winning conditions: returns char of winner if there is a winner
+ * otherwise it returns '0' indicating no winner yet
+ */
+ char::Board::chkWin(){
+     
+       // Check for all winning conditions
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (board[i][j] != ' ') {
+                    // Check vertical
+                    if (i + connect <= rows) {
+                        bool win = true;
+                        for (int k = 1; k < connect; k++) {
+                            if (board[i + k][j] != board[i][j]) {
+                                win = false;
+                                break;
+                            }
+                        }
+                        if (win) return board[i][j];
+                    }
+
+                    // Check horizontal
+                    if (j + connect <= cols) {
+                        bool win = true;
+                        for (int k = 1; k < connect; k++) {
+                            if (board[i][j + k] != board[i][j]) {
+                                win = false;
+                                break;
+                            }
+                        }
+                        if (win) return board[i][j];
+                    }
+
+                    // Check diagonal top-left to bottom-right
+                    if (i + connect <= rows && j + connect <= cols) {
+                        bool win = true;
+                        for (int k = 1; k < connect; k++) {
+                            if (board[i + k][j + k] != board[i][j]) {
+                                win = false;
+                                break;
+                            }
+                        }
+                        if (win) return board[i][j];
+                    }
+
+                    // Check diagonal top-right to bottom-left
+                    if (i + connect <= rows && j - connect + 1 >= 0) {
+                        bool win = true;
+                        for (int k = 1; k < connect; k++) {
+                            if (board[i + k][j - k] != board[i][j]) {
+                                win = false;
+                                break;
+                            }
+                        }
+                        if (win) return board[i][j];
+                    }
+                }
+            }
+        }
+
+        return '\0'; // No winner 
+    }
+     
+ 

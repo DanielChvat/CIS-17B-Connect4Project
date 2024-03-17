@@ -15,14 +15,12 @@
 Game::Game() {
 }
 
-Game::Game(const Game& orig) {
-}
-
 Game::~Game() {
 }
 
 // Function to run game
-void::Game::runGame(){
+
+void::Game::runGame() {
 
     /*
  
@@ -48,7 +46,7 @@ void::Game::runGame(){
      * 
      * 
      */
-         
-    
-    
+
+
+
 }
