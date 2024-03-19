@@ -182,5 +182,32 @@ void Board::displayBoard() const {
 
         return '\0'; // No winner 
     }
+
+/*Function definition to check if columns on board are full
+  */
+    bool::Board::isColFull(int col) {
+        --col;
+        for (int i = 0; i < this->rows; i++) {
+            if (board[i][col] == ' ') {  // ' ' is empty on board
+                return false;  
+            }
+        }
+        cout<<"COLUMN IS FULL!"<<endl;
+        return true;  // All columns full
+    }
+    
+/* Function definition for checking if board is full used for DRAW condition 
+ */
+    bool::Board::isBrdFull() const{
+        for (int i = 0; i < this->rows; i++) {
+            for (int j = 0; j < this->cols; j++) {
+                if (board[i][j] == ' ') {  
+                    return false;  
+                }
+            }
+        }
+        cout<<"BOARD IS FULL!"<<endl;
+        return true;  //  board is full
+    }
      
  
