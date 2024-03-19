@@ -78,6 +78,10 @@ int main(int argc, char** argv) {
                     cout << "Player 2 wins" << endl;
                 }
                 break;
+            } else if (b.isBrdFull()) {
+                b.displayBoard();
+                cout << "DRAW!" << endl;
+                break;
             }
         }
         
