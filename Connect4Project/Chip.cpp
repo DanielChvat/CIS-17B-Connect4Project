@@ -12,12 +12,26 @@
 
 #include "Chip.h"
 
+/* 3/16/24 Noel
+ */
 Chip::Chip() {
+    this->color='P';
+ 
+}
+/* 3/16/24 Noel 
+ */
+Chip::Chip(char c){
+    this->color = c; 
 }
 
-Chip::Chip(const Chip& orig) {
-}
+
 
 Chip::~Chip() {
 }
 
+// Function that returns the chip color
+/* 3/16/24 Noel 
+ */
+char::Chip::getColor() const {
+    return this->color;
+}
