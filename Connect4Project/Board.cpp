@@ -19,7 +19,7 @@
 using namespace std;
 /*
  3 param constructor: 
- *  3/16/24 Noel Perez
+ *  3/16/24 Noel 
  */
 Board::Board(int r, int c, int mode){
     this->connect =mode;
@@ -37,7 +37,7 @@ Board::Board(int r, int c, int mode){
 }
     
 // Destructor
-/* 3/16/24 Noel Perez
+/* 3/16/24 Noel 
  */
 Board::~Board() {
     for (int i =0; i < rows; i++){
@@ -47,7 +47,7 @@ Board::~Board() {
 }
 
 // Function to display board dynamically based on mode 
-/* 3/16/24 Noel Perez
+/* 3/16/24 Noel 
  */
 void Board::displayBoard() const {
     cout << "\n";
@@ -77,14 +77,14 @@ void Board::displayBoard() const {
   
 }
  // Get board function: return the board in its current state
-/* 3/16/24 Noel Perez
+/* 3/16/24 Noel 
  */
  char**::Board::getBoard(){
      return board; 
  }
 
 // Function definition for placing chip in column  
- /* 3/16/24 Noel Perez
+ /* 3/16/24 Noel 
  */
  void::Board::plChip(int column, const Chip& chip) {
      
@@ -100,18 +100,20 @@ void Board::displayBoard() const {
      
  
  // Function definition for validating column placement
- /* 3/16/24 Noel Perez
+ /* 3/16/24 Noel 
  */
  bool::Board::valPlace(int column ){
      --column;
-    while (column < 0 || column >= cols || board[0][column] != ' ') {
+    while ( column < 0 || column >= cols || board[0][column] != ' ') {
+        //cout<<"valPlace func "<<endl;
         cout << "Invalid column selection. Please enter a valid column number"<<" (1-"<<this->cols<<"): ";
         cin >> column;
+        
     }
     return true; 
  }
  
-/* 3/16/24 Noel Perez
+/* 3/16/24 Noel 
  * Function to check board winning conditions: returns char of winner if there is a winner
  * otherwise it returns '0' indicating no winner yet
  */
@@ -175,4 +177,29 @@ void Board::displayBoard() const {
         return '\0'; // No winner 
     }
      
- 
+ /*Function definition to check if columns on board are full
+  */
+    bool::Board::isColFull(int col) {
+        --col;
+        for (int i = 0; i < this->rows; i++) {
+            if (board[i][col] == ' ') {  // ' ' is empty on board
+                return false;  
+            }
+        }
+        cout<<"COLUMN IS FULL!"<<endl;
+        return true;  // All columns full
+    }
+    
+/* Function definition for checking if board is full used for DRAW condition 
+ */
+    bool::Board::isBrdFull() const{
+        for (int i = 0; i < this->rows; i++) {
+            for (int j = 0; j < this->cols; j++) {
+                if (board[i][j] == ' ') {  
+                    return false;  
+                }
+            }
+        }
+        cout<<"BOARD IS FULL!"<<endl;
+        return true;  //  board is full
+    }

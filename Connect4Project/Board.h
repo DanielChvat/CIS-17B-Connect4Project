@@ -17,7 +17,7 @@
 
 using namespace std;
 
-/* 3/16/24 Noel Perez
+/* 3/16/24 Noel 
  */
 class Board {
 
@@ -43,7 +43,13 @@ public:
     //void plChip(int col, Chip  &chip);
     void plChip(int col, const Chip& chip);
     
+    bool isColFull(int col);
+    
+    bool isBrdFull() const;
+    
     virtual ~Board();
+    
+    
 };
 
 #endif /* BOARD_H */

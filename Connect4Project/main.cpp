@@ -23,9 +23,9 @@ enum class GameState {
 int main(int argc, char** argv) {
 
    
-    int rows = 9;
-    int cols = 10;
-    int mode = 7;
+    int rows = 6;
+    int cols = 7;
+    int mode = 4;
 
     Board b = Board(rows, cols, mode);
 
@@ -37,7 +37,7 @@ int main(int argc, char** argv) {
 
     GameState gs = GameState::Player_1;
 
-    while (true) {
+    while (true ) {
         b.displayBoard();
 
         Player& crrntPlyr = (gs == GameState::Player_1) ? p1 : p2;
@@ -49,23 +49,29 @@ int main(int argc, char** argv) {
         int column = crrntPlyr.tkTurn(cols);
        
 
-        if (b.valPlace(column)) {
-            b.plChip(column , crrntPlyr.getChip() );
-            
-            char winner = b.chkWin();
+     if (b.valPlace(column) && !b.isColFull(column)) {
+        b.plChip(column, crrntPlyr.getChip());
 
-            if (winner != '\0') {
-                b.displayBoard();
-                if (gs == GameState::Player_1) {
-                    cout << "Player 1 wins" << endl;
-                } else {
-                    cout << "Player 2 wins" << endl;
-                }
-                break;
+        char winner = b.chkWin();
+
+        if (winner != '\0') {
+            b.displayBoard();
+
+            if (gs == GameState::Player_1) {
+                cout << "Player 1 wins" << endl;
+            } else {
+                cout << "Player 2 wins" << endl;
             }
+            break;
+        } else if (b.isBrdFull()) {
+            b.displayBoard();
+            cout << "DRAW!" << endl;
+            break;
         }
-        gs = (gs == GameState::Player_1) ? GameState::Player_2 : GameState::Player_1;
     }
+
+    gs = (gs == GameState::Player_1) ? GameState::Player_2 : GameState::Player_1;
+}
 
 
 
