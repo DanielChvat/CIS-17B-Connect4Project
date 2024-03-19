@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/cppFiles/class.h to edit this template
- */
+
 
 /* 
  * File:   Chip.h
@@ -13,14 +10,20 @@
 #ifndef CHIP_H
 #define CHIP_H
 
+/* 3/16/24 Noel Perez
+ */
 class Chip {
+private:
+    char color;
+    
 public:
     Chip();
-    Chip(const Chip& orig);
+    Chip(char c);
+  
     virtual ~Chip();
-private:
-
+public: 
+    char getColor() const ;
+    
 };
 
 #endif /* CHIP_H */
-
