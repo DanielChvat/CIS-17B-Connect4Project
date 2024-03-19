@@ -41,6 +41,10 @@ public:
     
     //void plChip(int col, Chip  &chip);
     void plChip(int col, const Chip& chip);
+
+    bool isColFull(int col);
+    
+    bool isBrdFull() const;
     
     virtual ~Board();
 };
