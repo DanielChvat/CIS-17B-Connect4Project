@@ -1,23 +1,35 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/cppFiles/class.cc to edit this template
- */
-
-/* 
- * File:   Computer.cpp
- * Author: Daniel
+/* File: Computer.cpp
+ * Author: michaelsalib
+ * Created on: March 17, 2024
  * 
- * Created on March 8, 2024, 11:29 AM
  */
+        
+//System Libraries
+#include <iostream>
+#include <ctime>
+#include <cstdlib>
+using namespace std;
 
+//User Libraries
 #include "Computer.h"
 
-Computer::Computer() {
+//Functions
+
+//Constructor
+Computer::Computer(){
+    this->chip='C';
 }
 
-Computer::Computer(const Computer& orig) {
+//Get Function
+Chip Computer::getChip(){
+    return chip;
 }
 
-Computer::~Computer() {
+//Random Turn Function
+int Computer::rTurn(int size){
+    int column;
+    //Random column based on board size (size = number of columns)
+    column=rand()%size+1;
+ 
+    return column;
 }
-

@@ -1,3 +1,5 @@
+
+
 /* 
  * File:   Game.h
  * Author: Daniel
@@ -30,3 +32,4 @@ private:
 };
 
 #endif /* GAME_H */
+
