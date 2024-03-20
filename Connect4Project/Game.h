@@ -12,23 +12,25 @@
 
 #include "Board.h"
 #include "Player.h"
-#include "Computer.h"
+
+enum class GameState {
+	Player_1, Player_2
+};
 
 class Game {
 private:
-   // Board b;
-   // Player p;
-//    Computer c;
-    
-  //  enum class GameState = {"playerTurn" , "compTurn"};
-    
-  public:
-    Game();
- 
-    virtual ~Game();    
-    
-    void runGame();
-    
+	Player *p1;
+	Player *p2;
+	Board *b;
+	GameState gs;
+	/* Computer *c; */
+
+
+	void init(int, int, int, char, char);
+public:
+	Game(int, int, int, char, char);
+	~Game();
+	void run(int);
 };
 
 #endif /* GAME_H */
