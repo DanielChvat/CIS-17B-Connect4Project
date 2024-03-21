@@ -15,7 +15,7 @@ using namespace std;
 /* 3/16/24 Noel Perez
  */
 class Player {
-    private:
+private:
     Chip chip; 
     
 public:

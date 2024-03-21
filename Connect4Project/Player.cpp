@@ -11,17 +11,19 @@
 /* 3/16/24 Noel Perez
  */
 Player::Player() {
-    //this->chip = Chip();
+    this->chip = Chip();
    // cout<<"In player constructor :"<<this->chip.getChip()<<endl;
 }
  Player::Player(const Chip &c) :  chip(c){
-    
+
+
  }
 /* 3/16/24 Noel Perez
  */
 //Player::Player( Chip c) {
 //    this->chip = c; 
 //}
+
 
 Player::~Player() {
 }

@@ -15,6 +15,11 @@
  * the game logic as is can handle ANY size board and any connect mode!!!!
  */
 #include "Board.h"
+#include "Game.h"
+#include "GameStates.h"
+#include "Player.h"
+#include "Chip.h"
+
 #include <iomanip>
 using namespace std;
 /*
@@ -168,13 +173,16 @@ void Board::displayBoard() const {
                                 break;
                             }
                         }
-                        if (win) return board[i][j];
+                        if (win) {
+                          return board[i][j];
+                        }
+
                     }
                 }
             }
         }
 
-        return '\0'; // No winner 
+        return '\0'; // No winner
     }
      
  /*Function definition to check if columns on board are full
