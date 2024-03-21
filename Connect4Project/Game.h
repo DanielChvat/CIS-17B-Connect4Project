@@ -15,6 +15,7 @@
 #include "GameStates.h"
 #include "Containers.h"
 
+//! Encapsulates Connect4 game logic
 class Game {
 private:
   struct Settings {
@@ -35,6 +36,7 @@ private:
   unsigned short pIdx_ = 0; // Index of current player
   int winIdx = -1; // Index of the winning player
 
+  //! Enqueue the next state
   void queueState(GameState* state) { stateQueue_.push(state); }
 
 public:
