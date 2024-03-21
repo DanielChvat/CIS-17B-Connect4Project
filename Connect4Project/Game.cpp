@@ -13,6 +13,10 @@
 #include "Game.h"
 #include "Player.h"
 
+Game::Game() {
+  stateQueue_.push(new SetupState(this));
+}
+
 Game::~Game(){
   for (int i=0; i < getSettings()->numP; i++) {
     delete p_[i];
@@ -23,9 +27,9 @@ Game::~Game(){
 
 void Game::run() {
   while (!end_) {
-    curState_->Enter();
-    curState_->Run();
-    curState_ = nextState_;
+    GameState* state = stateQueue_.pop();
+    state->Enter();
+    state->Run();
   }
 }
 
