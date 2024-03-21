@@ -21,7 +21,7 @@ void SetupState::Run() {
   setupPlayers();
   if (!game_->b_) setupBoard();
 
-  game_->nextState_ = game_->getState(Game::STATES::TURN);
+  game_->queueState(new TurnState(game_));
 }
 
 void SetupState::setupPlayers() {
@@ -62,10 +62,10 @@ void TurnState::Run(){
 
   if (game_->b_->chkWin()) {
     game_->winIdx = game_->pIdx_;
-    game_->nextState_ = game_->getState(Game::STATES::END);
+    game_->queueState(new EndState(game_));
   } else {
     game_->pIdx_ = (game_->pIdx_+1)%game_->getSettings()->numP; // Increment player index circularly
-    game_->nextState_ = game_->getState(Game::STATES::TURN);
+    game_->queueState(new TurnState(game_));
   }
 }
 
@@ -92,7 +92,7 @@ void EndState::Run() {
     game_->b_ = nullptr;
     game_->turns_ = 0;
 
-    game_->nextState_ = game_->getState(Game::STATES::SETUP);
+    game_->queueState(new SetupState(game_));
   } else {
     std::cout << "Thanks for playing!\n";
     game_->end_ = true;

@@ -29,6 +29,7 @@ protected:
     Game *game_;
 };
 
+//! Encapsulates pre-game setup logic.
 class SetupState : public GameState {
 public:
     SetupState(Game *game) : GameState(game) { }
@@ -49,6 +50,7 @@ public:
   void Run() override;
 };
 
+//! Encapsulates post-game logic.
 class EndState : public GameState {
 public:
   EndState(Game *game) : GameState(game) { }

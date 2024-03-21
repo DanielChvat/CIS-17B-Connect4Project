@@ -13,7 +13,9 @@
 #include "Board.h"
 #include "Player.h"
 #include "GameStates.h"
+#include "Containers.h"
 
+//! Encapsulates Connect4 game logic
 class Game {
 private:
   struct Settings {
@@ -25,12 +27,7 @@ private:
     unsigned short mode = 4; // Number of connected chips required to win
   } settings_;
 
-  enum STATES { SETUP, TURN, END };
-
-  GameState* states_[3] = {new SetupState(this), new TurnState(this), new EndState(this)};
-  // TODO GameState queue?
-  GameState *curState_ = states_[0];
-  GameState *nextState_ = nullptr;
+  GameStateQueue stateQueue_;
 
   bool end_ = false;
   unsigned int turns_ = 0; // Turns taken since the start of the game
@@ -39,10 +36,11 @@ private:
   unsigned short pIdx_ = 0; // Index of current player
   int winIdx = -1; // Index of the winning player
 
-  GameState* getState(STATES state) const { return states_[state]; }
+  //! Enqueue the next state
+  void queueState(GameState* state) { stateQueue_.push(state); }
 
 public:
-	Game() =default;
+	Game();
 	~Game();
 
 	void run();
