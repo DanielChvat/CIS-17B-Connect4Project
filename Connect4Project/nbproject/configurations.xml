@@ -8,8 +8,10 @@
       <itemPath>Board.h</itemPath>
       <itemPath>Chip.h</itemPath>
       <itemPath>Computer.h</itemPath>
+      <itemPath>Containers.h</itemPath>
       <itemPath>Database.h</itemPath>
       <itemPath>Game.h</itemPath>
+      <itemPath>GameStates.h</itemPath>
       <itemPath>Menu.h</itemPath>
       <itemPath>Player.h</itemPath>
       <itemPath>User.h</itemPath>
@@ -25,8 +27,10 @@
       <itemPath>Board.cpp</itemPath>
       <itemPath>Chip.cpp</itemPath>
       <itemPath>Computer.cpp</itemPath>
+      <itemPath>Containers.cpp</itemPath>
       <itemPath>Database.cpp</itemPath>
       <itemPath>Game.cpp</itemPath>
+      <itemPath>GameStates.cpp</itemPath>
       <itemPath>Menu.cpp</itemPath>
       <itemPath>Player.cpp</itemPath>
       <itemPath>User.cpp</itemPath>
@@ -81,6 +85,10 @@
       </item>
       <item path="Computer.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Containers.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Containers.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Database.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Database.h" ex="false" tool="3" flavor2="0">
@@ -88,6 +96,10 @@
       <item path="Game.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Game.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GameStates.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GameStates.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Menu.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -140,6 +152,10 @@
       </item>
       <item path="Computer.h" ex="false" tool="3" flavor2="0">
       </item>
+      <item path="Containers.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="Containers.h" ex="false" tool="3" flavor2="0">
+      </item>
       <item path="Database.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Database.h" ex="false" tool="3" flavor2="0">
@@ -147,6 +163,10 @@
       <item path="Game.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Game.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="GameStates.cpp" ex="false" tool="1" flavor2="0">
+      </item>
+      <item path="GameStates.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Menu.cpp" ex="false" tool="1" flavor2="0">
       </item>

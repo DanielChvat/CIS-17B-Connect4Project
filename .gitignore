@@ -1,2 +1,12 @@
-/Connect4Project/build/
-/Connect4Project/dist/
+Connect4Project/**/nbproject/private/
+Connect4Project/**/nbproject/Makefile-*.mk
+Connect4Project/**/nbproject/Package-*.bash
+Connect4Project/build/
+Connect4Project/nbbuild/
+Connect4Project/dist/
+Connect4Project/nbdist/
+Connect4Project/.nb-gradle/
+
+.idea/
+
+.DS_Store

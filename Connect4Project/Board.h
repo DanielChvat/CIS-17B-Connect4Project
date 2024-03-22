@@ -1,7 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/cppFiles/class.h to edit this template
- */
+
+
 
 /* 
  * File:   Board.h
@@ -13,14 +11,45 @@
 #ifndef BOARD_H
 #define BOARD_H
 
+#include "Chip.h"
+
+#include <iostream>
+
+using namespace std;
+
+/* 3/16/24 Noel 
+ */
 class Board {
+
+private:
+    char **board;
+    int connect;
+    int rows;
+    int cols;
+    
+
 public:
     Board();
-    Board(const Board& orig);
+    Board(int r, int c,int mode );
+   
+    void displayBoard()const;
+    
+    char **getBoard();
+   
+    bool valPlace(int col);
+    
+    char chkWin();
+    
+    //void plChip(int col, Chip  &chip);
+    void plChip(int col, const Chip& chip);
+    
+    bool isColFull(int col);
+    
+    bool isBrdFull() const;
+    
     virtual ~Board();
-private:
-
+    
+    
 };
 
 #endif /* BOARD_H */
-
