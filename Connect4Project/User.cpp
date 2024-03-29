@@ -10,13 +10,14 @@
  * Created on March 8, 2024, 11:29 AM
  */
 
-// System Libraries
 #include "User.h"
 #include "GameStates.h"
+
 #include <iostream>
-#include <fstream>
 #include <cstring>
 #include <iomanip>
+#include <ctime>
+#include <chrono>
 using namespace std;
 
 //Constructor
@@ -25,16 +26,11 @@ User::User(){ //set all values to null
   userName = '\0';
   password = '\0';
   accAge = 0;
-  numWins = 0;
-  numLost = 0;
-  numPlayed = 0;
-  rank = 0;
 }
 
 //Destructor
 User::~User(){
   //destroy dynamically allocated variables
-  
 }
 
 //Functions
@@ -69,7 +65,7 @@ void User::signUp(){
     status = checkPass(password);
   }
   cout << "Sign up successful!" << endl;
-  
+  startAccAge(); 
 }
 
 void User::logOut(){
@@ -119,7 +115,6 @@ bool User::checkPass(const string &password){
   - at least 1 number
   - no need special character
 */
-  
 }
 
 // Get information about the user
@@ -127,37 +122,38 @@ string User::getUserName() const {
   return userName;
 }
 
-int User::getNumPlayed() const {
-  //Read numPlayed from binary file
-  return numPlayed;
-}
-int User::getNumWins() const {
-  //Read numWins from binary file
-  return numWins;
-}
-int User::getNumLost() const {
-  //Read numLost from binary file
-  return numLost;
-}
-
-
 //Set the information obtained
 void User::setUserName(/*std::string& userName*/) {
   cin >> userName;
 }
-void User::setNumPlayed(int numPlayed) {
-  numPlayed = 0;
-  numPlayed = numWins + numLost;
-}
-void User::setNumWins(int numWins) {
-  // if(wIndx))
-  //     numWin++;
 
+/*
+  make a function that looks, if the user has successfully made their account, then start account age, store the starting date.
+*/
+
+void User::startAccAge() {
+  // std::chrono::system_clock::time_point registDate;
+  // registDate = std::chrono::system_clock::now();
+  
+  // // std::chrono::system_clock::time_point currTime = std::chrono::system_clock::now();
+  // time_t t =std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+  // // cout << endl << ctime(&t) << endl;
+  // tm *now = std::localtime(&t);
+  // cout << std::put_time(now, "%m - %d - %y") << endl;
+
+  // // std::chrono::duration<float> elapsed = currTime - registDate;
+  time_t t = time(NULL);
+  struct tm date = *localtime(&t);
+  cout << "Account enrolled on: " << date.tm_mon + 1 <<" - " << date.tm_mday << date.tm_year +1900 << endl;
+  
+  
+  
+  calcAge();
 }
 
-void User::setNumLost(int numLost) {
-  /*
-      if(player !win)
-        numLost++;
-  */
+void User::calcAge(){ //This calculates the account age based on startAccAge
+  // int days = elapsed.count()/(60*60*24);
+  // cout << "Account age: " << days << " days." << endl;
+  
+  //TODO figure out how to calculate the account age in days
 }
