@@ -24,7 +24,7 @@ private:
 	char *data;
 	long size;
 };
-
+ 
 class Serializable {
 public:
 	Serializable();
@@ -39,6 +39,7 @@ public:
 	~Database();
 	User *Login(char *, char *);	
 	void WriteUser(Datastream *);
+                Datastream ReadUserDatastream();
 private:
 	std::fstream UserFile;
 	char *FileName;
