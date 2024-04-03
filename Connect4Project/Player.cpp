@@ -9,15 +9,16 @@
 #include "Player.h"
 
 /* 3/16/24 Noel Perez
+ * 
+ * default Player constructor calls default Chip constructor to set Player's chip color 
  */
 Player::Player() {
     this->chip = Chip();
-   // cout<<"In player constructor :"<<this->chip.getChip()<<endl;
 }
- Player::Player(const Chip &c) :  chip(c){
 
-
- }
+/* 1 param constructor takes in Chip object
+ */
+ Player::Player(const Chip &c) :  chip(c){ }
 /* 3/16/24 Noel Perez
  */
 //Player::Player( Chip c) {
