@@ -69,7 +69,7 @@ void SetupState::setupBoard() {
     int choice = 0;
     bool valid = false;
     while ( !valid ) {
-        cout << "Choose the connect mode (e.g., Connect 4, Connect 5, etc.): ";
+        cout << "Choose the connect mode ( Connect 4, Connect 5, Connect 6, ETC.): ";
         cin >> choice;
         if (choice >= 4) {
 

@@ -189,9 +189,10 @@ void Board::displayBoard() const {
   * Check win function that returns Player object pointer. Same functionality as 
   * before but returns a pointer to a Player object using the 1 param constructor
   */
-   Player * Board::chkWin(){
-     
-       // Check for all winning conditions
+   Player* Board::chkWin(){
+       
+       // Check for all winning conditions below starting with vertical
+       
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 if (board[i][j] != ' ') {
@@ -316,7 +317,7 @@ void Board::displayBoard() const {
       */
      bool::Board::isTie(){
          
-         if ( Board::isBrdFull() && Board::chkWin() == nullptr){
+         if ( Board::isBrdFull() and Board::chkWin() == nullptr){
              return true;
          }else
              return false;
