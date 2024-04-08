@@ -38,12 +38,12 @@ int Computer::rTurn(int size){
 int Computer::cTurn(Board &b,int size){
     //Horizontal
     if(checkH(b)!=-1){
-        cout<<"H"<<endl;
+        //cout<<"H"<<endl;
         return checkH(b);
     }
     //Vertical
     if(checkV(b)!=-1){
-        cout<<"V"<<endl;
+        //cout<<"V"<<endl;
         return checkV(b);
     }
     //Diagonal
