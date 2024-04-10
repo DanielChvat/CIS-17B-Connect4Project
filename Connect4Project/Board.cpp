@@ -122,9 +122,77 @@ void Board::displayBoard() const {
  * Function to check board winning conditions: returns char of winner if there is a winner
  * otherwise it returns '0' indicating no winner yet
  */
- char::Board::chkWin(){
+// char::Board::chkWin(){
+//     
+//       // Check for all winning conditions
+//        for (int i = 0; i < rows; i++) {
+//            for (int j = 0; j < cols; j++) {
+//                if (board[i][j] != ' ') {
+//                    // Check vertical
+//                    if (i + connect <= rows) {
+//                        bool win = true;
+//                        for (int k = 1; k < connect; k++) {
+//                            if (board[i + k][j] != board[i][j]) {
+//                                win = false;
+//                                break;
+//                            }
+//                        }
+//                        if (win) return board[i][j];
+//                    }
+//
+//                    // Check horizontal
+//                    if (j + connect <= cols) {
+//                        bool win = true;
+//                        for (int k = 1; k < connect; k++) {
+//                            if (board[i][j + k] != board[i][j]) {
+//                                win = false;
+//                                break;
+//                            }
+//                        }
+//                        if (win) return board[i][j];
+//                    }
+//
+//                    // Check diagonal top-left to bottom-right
+//                    if (i + connect <= rows && j + connect <= cols) {
+//                        bool win = true;
+//                        for (int k = 1; k < connect; k++) {
+//                            if (board[i + k][j + k] != board[i][j]) {
+//                                win = false;
+//                                break;
+//                            }
+//                        }
+//                        if (win) return board[i][j];
+//                    }
+//
+//                    // Check diagonal top-right to bottom-left
+//                    if (i + connect <= rows && j - connect + 1 >= 0) {
+//                        bool win = true;
+//                        for (int k = 1; k < connect; k++) {
+//                            if (board[i + k][j - k] != board[i][j]) {
+//                                win = false;
+//                                break;
+//                            }
+//                        }
+//                        if (win) {
+//                          return board[i][j];
+//                        }
+//
+//                    }
+//                }
+//            }
+//        }
+//
+//        return '\0'; // No winner
+//    }
      
-       // Check for all winning conditions
+ /*
+  * Check win function that returns Player object pointer. Same functionality as 
+  * before but returns a pointer to a Player object using the 1 param constructor
+  */
+   Player* Board::chkWin(){
+       
+       // Check for all winning conditions below starting with vertical
+       
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 if (board[i][j] != ' ') {
@@ -137,7 +205,7 @@ void Board::displayBoard() const {
                                 break;
                             }
                         }
-                        if (win) return board[i][j];
+                        if (win) return new Player( Chip( board[i][j]) );
                     }
 
                     // Check horizontal
@@ -149,7 +217,7 @@ void Board::displayBoard() const {
                                 break;
                             }
                         }
-                        if (win) return board[i][j];
+                        if (win) return new Player( Chip (board[i][j]) );
                     }
 
                     // Check diagonal top-left to bottom-right
@@ -161,7 +229,7 @@ void Board::displayBoard() const {
                                 break;
                             }
                         }
-                        if (win) return board[i][j];
+                        if (win) return new Player( Chip (board[i][j]) );
                     }
 
                     // Check diagonal top-right to bottom-left
@@ -174,7 +242,7 @@ void Board::displayBoard() const {
                             }
                         }
                         if (win) {
-                          return board[i][j];
+                          return new Player( Chip (board[i][j]) );
                         }
 
                     }
@@ -182,9 +250,10 @@ void Board::displayBoard() const {
             }
         }
 
-        return '\0'; // No winner
+        return nullptr; // No winner
     }
-     
+ 
+ 
  /*Function definition to check if columns on board are full
   */
     bool::Board::isColFull(int col) {
@@ -211,3 +280,45 @@ void Board::displayBoard() const {
         cout<<"BOARD IS FULL!"<<endl;
         return true;  //  board is full
     }
+    
+    /*
+     * function to clear board of all Player chips
+     */
+     void :: Board:: clearBoard(){
+          for(int i(0); i < rows; i++){
+        for(int j{0}; j < cols; j++){
+            board[i][j] = ' ';
+        }
+    }
+}
+     
+     /*Function - Set board mode : might be redundant - check if necessary
+      */
+     void :: Board::setMode(){
+         int choice=0;
+          bool valid = false;
+        while (!valid ) {
+            cout << "Choose the connect value (e.g., Connect 4, Connect 5, etc.): ";
+            cin >> choice;
+            if (choice >= 4) {
+                this->connect = choice; //  connect value
+                this->rows = ( this->connect + 2 ); // Set rows to 2 more than the mode
+                this->cols = ( this->connect + 3) ; // Set columns to 3 more than the mode
+                valid = true;
+            } else {
+                cerr << "Error: Connect value should be 4 or greater"<<endl;
+            }
+        }
+     }
+     
+     
+     /*
+      Function to check tie decision
+      */
+     bool::Board::isTie(){
+         
+         if ( Board::isBrdFull() and Board::chkWin() == nullptr){
+             return true;
+         }else
+             return false;
+     }

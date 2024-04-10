@@ -9,6 +9,8 @@
 
 #ifndef CHIP_H
 #define CHIP_H
+#include <iostream>
+using namespace std;
 
 /* 3/16/24 Noel Perez
  */
@@ -23,7 +25,7 @@ public:
     virtual ~Chip();
 public: 
     char getColor() const ;
-    
+    void setColor();
 };
 
 #endif /* CHIP_H */
