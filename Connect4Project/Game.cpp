@@ -12,6 +12,7 @@
 
 #include "Game.h"
 #include "Player.h"
+#include "Chip.h"
 
 Game::Game() {
   stateQueue_.push(new SetupState(this));

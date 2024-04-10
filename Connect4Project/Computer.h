@@ -1,26 +1,30 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/cppFiles/class.h to edit this template
- */
-
 /* 
  * File:   Computer.h
- * Author: Daniel
+ * Author: michaelsalib
  *
- * Created on March 8, 2024, 11:29 AM
+ * Created on March 17, 2024
  */
+
+//User Libraries
+#include "Chip.h"
+#include "Board.h"
 
 #ifndef COMPUTER_H
 #define COMPUTER_H
-
-class Computer {
-public:
-    Computer();
-    Computer(const Computer& orig);
-    virtual ~Computer();
-private:
-
+class Computer{
+    private:
+        Chip chip;
+    public:
+        Computer();
+        int rTurn(int);
+        Chip getChip();
+        int cTurn(Board &,int);
+        int checkH(Board &); 
+        int checkV(Board &);
+        int checkD(Board &);
+        int build(Board &);
 };
+
 
 #endif /* COMPUTER_H */
 
