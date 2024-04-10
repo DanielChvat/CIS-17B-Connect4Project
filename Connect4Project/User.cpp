@@ -11,11 +11,9 @@
  */
 
 #include "User.h"
-#include "GameStates.h"
 
 #include <iostream>
 #include <cstring>
-#include <iomanip>
 #include <ctime>
 #include <chrono>
 using namespace std;
@@ -123,8 +121,16 @@ string User::getUserName() const {
 }
 
 //Set the information obtained
-void User::setUserName(/*std::string& userName*/) {
-  cin >> userName;
+void User::setUserName(std::string& userName) {
+    this->userName = userName;
+}
+
+void User::setName(std::string &name){
+    this->name = name;
+}
+
+void User::setPassword(std::string &password){
+    this->password = password;
 }
 
 /*
@@ -156,5 +162,53 @@ void User::calcAge(){ //This calculates the account age based on startAccAge
   // cout << "Account age: " << days << " days." << endl;
   
   //TODO figure out how to calculate the account age in days
+}
+
+void User::Load(Datastream *data){
+    unsigned long nameSize;
+    unsigned long UserNameSize;
+    unsigned long passwordSize;
+    unsigned long cursor = 0L;
+    const char *buffer = (const char *)data->data;
+
+    ReadFromBuf(buffer, (unsigned char *)&nameSize, sizeof(unsigned long), cursor);
+    ReadFromBuf(buffer, (unsigned char *)&UserNameSize, sizeof(unsigned long), cursor);
+    ReadFromBuf(buffer, (unsigned char *)&passwordSize, sizeof(unsigned long), cursor);
+
+    unsigned char *temp = new unsigned char[nameSize];
+    ReadFromBuf(buffer, temp, nameSize, cursor);
+    this->name = std::string((const char *)temp);
+    delete []temp;
+
+
+    temp = new unsigned char[UserNameSize];
+    ReadFromBuf(buffer, temp, UserNameSize, cursor);
+    this->userName = std::string((const char *)temp);
+    delete []temp;
+
+
+    temp = new unsigned char[passwordSize];
+    ReadFromBuf(buffer, temp, passwordSize, cursor);
+    this->password = std::string((const char *)temp);
+    delete []temp;
+}
+
+Datastream User::Serialize(){
+    unsigned long nameSize = name.size();
+    unsigned long UserNameSize = userName.size();
+    unsigned long passwordSize = password.size();
+    unsigned long recordSize = nameSize + UserNameSize + passwordSize + 3 * sizeof(unsigned long);
+    unsigned long cursor = 0L;
+    unsigned char *buffer = new unsigned char[recordSize];
+    
+     WriteToBuf(buffer, (const char *)&nameSize, sizeof(unsigned long), cursor);
+     WriteToBuf(buffer, (const char *)&UserNameSize, sizeof(unsigned long), cursor);
+     WriteToBuf(buffer, (const char *)&passwordSize, sizeof(unsigned long), cursor);
+     WriteToBuf(buffer, name.c_str() , nameSize, cursor);
+     WriteToBuf(buffer, userName.c_str(), UserNameSize, cursor);
+     WriteToBuf(buffer, password.c_str(), passwordSize, cursor);
+
+     Datastream data(buffer, recordSize);
+     return data;
 }
 

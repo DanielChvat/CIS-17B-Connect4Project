@@ -14,8 +14,9 @@
 #define USER_H
 
 #include <string>
+#include "Database.h"
 
-class User{
+class User : public Serializable{
   public:
     //Constructor
     User();
@@ -28,7 +29,10 @@ class User{
     
     //Set the information obtained
     /*NEED SETNAME*/
-    void setUserName(/*std::string& userName*/);
+    void setName(std::string && name);
+    void setName(std::string& name);
+    void setUserName(std::string& userName);
+    void setPassword(std::string& password);
     void startAccAge();    //start account age when user first signed up
     void calcAge();        //calculate age of user's account  
     
@@ -37,10 +41,13 @@ class User{
     void signUp();    //Sign up for new users
     void logOut();    //Log out
     bool checkPass(const std::string &); /*Check if password for new users meets password requirements 
-  - returns true if password is valid, false if not
+  - returns true if password is valid, false if not 
 */
-    
 
+    Datastream Serialize();
+    void Load(Datastream *);
+  
+    friend Database;
   private:
     std::string name,
                 userName,
@@ -49,7 +56,7 @@ class User{
         //month,
         //day,
         //year;
-
+    
 };
 
 #endif   /* USER_H */
