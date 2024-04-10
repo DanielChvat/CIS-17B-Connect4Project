@@ -171,23 +171,23 @@ void User::Load(Datastream *data){
     unsigned long cursor = 0L;
     const char *buffer = (const char *)data->data;
 
-    ReadFromBuf(buffer, (unsigned char *)&nameSize, sizeof(unsigned long), cursor);
-    ReadFromBuf(buffer, (unsigned char *)&UserNameSize, sizeof(unsigned long), cursor);
-    ReadFromBuf(buffer, (unsigned char *)&passwordSize, sizeof(unsigned long), cursor);
+    ReadFromBuf(buffer, (char *)&nameSize, sizeof(unsigned long), cursor);
+    ReadFromBuf(buffer, (char *)&UserNameSize, sizeof(unsigned long), cursor);
+    ReadFromBuf(buffer, (char *)&passwordSize, sizeof(unsigned long), cursor);
 
-    unsigned char *temp = new unsigned char[nameSize];
+    char *temp = new char[nameSize];
     ReadFromBuf(buffer, temp, nameSize, cursor);
     this->name = std::string((const char *)temp);
     delete []temp;
 
 
-    temp = new unsigned char[UserNameSize];
+    temp = new char[UserNameSize];
     ReadFromBuf(buffer, temp, UserNameSize, cursor);
     this->userName = std::string((const char *)temp);
     delete []temp;
 
 
-    temp = new unsigned char[passwordSize];
+    temp = new char[passwordSize];
     ReadFromBuf(buffer, temp, passwordSize, cursor);
     this->password = std::string((const char *)temp);
     delete []temp;
@@ -199,7 +199,7 @@ Datastream User::Serialize(){
     unsigned long passwordSize = password.size();
     unsigned long recordSize = nameSize + UserNameSize + passwordSize + 3 * sizeof(unsigned long);
     unsigned long cursor = 0L;
-    unsigned char *buffer = new unsigned char[recordSize];
+    char *buffer = new char[recordSize];
     
      WriteToBuf(buffer, (const char *)&nameSize, sizeof(unsigned long), cursor);
      WriteToBuf(buffer, (const char *)&UserNameSize, sizeof(unsigned long), cursor);

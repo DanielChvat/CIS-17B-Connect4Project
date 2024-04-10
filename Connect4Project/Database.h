@@ -21,21 +21,20 @@ class User;
 
 class Datastream {
 public:
-	Datastream(unsigned char *data, long size) : data(data), size(size){}
+	Datastream(char *data, long size) : data(data), size(size){}
     Datastream(){}
 	~Datastream();
-	unsigned char *data;
+	char *data;
 	long size;
 };
  
 class Serializable {
 public:
-	Serializable();
-    void WriteToBuf(unsigned char *dst, const char *src, unsigned long size, unsigned long &cursor);
-    void ReadFromBuf(const char *src, unsigned char *dst, unsigned long size, unsigned long &cursor);
+    void WriteToBuf(char *dst, const char *src, unsigned long size, unsigned long &cursor);
+    void ReadFromBuf(const char *src, char *dst, unsigned long size, unsigned long &cursor);
 private:
-	virtual Datastream Serialize();
-	virtual void Load(Datastream *);
+    virtual Datastream Serialize() = 0;
+    virtual void Load(Datastream *) = 0;
 };
 
 class Database {

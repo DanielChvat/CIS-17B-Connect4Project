@@ -20,13 +20,13 @@ using std::ios;
 
 Datastream::~Datastream() { delete[] this->data; }
 
-void Serializable::WriteToBuf(unsigned char *buffer, const char *data, unsigned long size, unsigned long &cursor){
+void Serializable::WriteToBuf(char *buffer, const char *data, unsigned long size, unsigned long &cursor){
     for(int i=0; i < size; i++){
         buffer[cursor++] = data[i];
     }
 }
 
-void Serializable::ReadFromBuf(const char *buffer, unsigned char *dst, unsigned long size, unsigned long &cursor){
+void Serializable::ReadFromBuf(const char *buffer, char *dst, unsigned long size, unsigned long &cursor){
     for(int i=0; i < size; i++){
         dst[i] = buffer[cursor++];
     }
