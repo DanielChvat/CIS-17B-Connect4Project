@@ -36,10 +36,10 @@ int Computer::rTurn(int size){
 
 //Pre-Win Check, for computer to block player wins or finish connect
 int Computer::cTurn(Board &b,int size){
-    //Horizontal
-    if(checkH(b)!=-1){
-        //cout<<"H"<<endl;
-        return checkH(b);
+   //Horizontal
+   if(checkH(b)!=-1){
+       //cout<<"H"<<endl;
+       return checkH(b);
     }
     //Vertical
     if(checkV(b)!=-1){
@@ -47,13 +47,13 @@ int Computer::cTurn(Board &b,int size){
         return checkV(b);
     }
     //Diagonal
-    //if(checkD(b)!=-1){
-    //    cout<<"D"<<endl;
-    //    return checkD(b);
-    //}
+    if(checkD(b)!=-1){
+        //cout<<"D"<<endl;
+        return checkD(b);
+    }
     //Random
     else{
-        cout<<"R"<<endl;
+        //cout<<"R"<<endl;
         return (rTurn(size));
     }
 
@@ -65,7 +65,7 @@ int Computer::checkH(Board &board){
    char **b = board.getBoard();
    const int mode=board.getMode();
    const int rows=board.getRows();
-   const int cols=board.getColmns();
+   const int cols=board.getCols();
    int tracker=1,begin,end,select;
    
    //Looping through board
@@ -118,15 +118,17 @@ int Computer::checkV(Board &board){
    char **b = board.getBoard();
    const int mode=board.getMode();
    const int rows=board.getRows();
-   const int cols=board.getColmns();
+   const int cols=board.getCols();
    int tracker=1;
    
    
    for(int j=0; j<cols; j++){
        for(int i=rows-1; i>0; i--){
            for(int k=1; k<mode && i-k>=0; k++){
+               //Iterating vertically through each column
                if(b[i][j]!=' ' && b[i][j]==b[i-k][j] && i-k<rows){
                    tracker++;
+                   //If the slot above the sequence is open
                    if(tracker==mode-1 && b[i-(mode-1)][j]==' '){
                        return j+1;
                    }
@@ -144,50 +146,176 @@ int Computer::checkD(Board &board){
     char **b = board.getBoard();
     const int mode=board.getMode();
     const int rows=board.getRows();
-    const int cols=board.getColmns();
-    int select;
+    const int cols=board.getCols();
+    int tracker=1, left,right;
    
-    for(int i=0; i<rows; i++){ //skipping first row for boundary
-        for(int j=0; j<cols; j++){
-            if(b[i][j]!=' '){
-                
-                // Check diagonal top-left to bottom-right
-                if (i+mode<=rows && j+mode<=cols){
-                        bool win=true;
-                        for (int k=1; k<mode-1; k++) {
-                            if (b[i+k][j+k] != b[i][j]) {
-                                win = false;
-                                break;
-                            }
-                        }
-                        if (win){
-                            if(b[i+mode-1][j+mode-1]==' '){
-                                 select=j+mode-1;
-                                 return select;
-                            }
+    //Checking top-half / diagonals
+    for(int i=rows-1; i>=mode; i--){
+        for(int j=0; j<i; j++){
+            //If next diagonal is matching and not empty
+            if(b[i-j][j]==b[i-(j+1)][j+1] && b[i-j][j]!=' '){
+                tracker++;
+                //If sequence is one-from winning
+                if(tracker==mode-1){
+                    //Checking right side
+                    //If next column is valid
+                    if(i-j-1>=0 && j+1<cols){
+                        //If next in sequence is open and has chip underneath
+                        if(b[i-j-2][j+2]==' ' && b[i-j-1][j+2]!=' '){
+                            right=j+2;
+                            return right+1;
                         }
                     }
-                
-                //Check diagonal top-right to bottom-left
-                if(i+mode<=rows && j-mode+1>=0){
-                    bool win=true;
-                    for(int k=1; k<mode-1; k++){
-                        if(b[i][j]!=b[i+k][j-k]){
-                            win=false;
-                            break;
+                    
+                    //Checking left side of diagonal
+                    //Boundary check and not last diagonal
+                    if(i-j+(mode-2)<rows-1 && j-(mode-2)>=0){
+                        if(b[i-j+(mode-2)][j-(mode-2)]==' ' && b[i-j+(mode-1)][j-(mode-2)]!=' '){
+                            left=j-(mode-2);
+                            return left+1;
                         }
                     }
-                    if(win){
-                        if(b[i+mode-1][j-mode-1]==' '){
-                              select=j-mode-1;
-                              return select;
+                    //Last row doesn't need to check for chip beneath it
+                    if(i-j+(mode-2)==rows-1 && j-(mode-2)>=0){
+                        if(b[i-j+(mode-2)][j-(mode-2)]==' '){
+                            left=j-(mode-2);
+                            return left+1;
                         }
                     }
                 }
-                
-            }          
+            }
+            else{
+                tracker=1;
+            }
         }
-    }  
+    }
+    
+    //Checking bottom-half / diagonals
+    for(int j=1; j<cols-1; j++){
+        int i=rows-1;
+        for(int k=0; j+k<cols-1; k++){
+            //Checking next diagonal
+            if(b[i-k][j+k]!=' ' && b[i-k][j+k]==b[i-(k+1)][j+k+1]){
+                tracker++;
+                //One from winning
+                if(tracker==mode-1){
+                    //Checking right side of diagonal
+                    //If within bounds
+                    if(i-(k+2)>=0 && j+k+2<=cols-1){
+                        //If next diagonal is empty & slot below is not empty
+                        if(b[i-(k+2)][j+k+2]==' ' && b[i-(k+1)][j+k+2]!=' '){
+                            right=j+k+3;
+                            return right;
+                        }
+                    }
+                 
+                    //Checking left side of diagonals
+                    //If above last row & within bounds
+                    if(i-k+(mode-2)<rows-2 && j+k-(mode-2)>0){
+                        //Loop stops 2 elements early, so mode-2
+                        //Checking if diagonal to the bottom left is open, and underneath is filled
+                        if(b[i+(mode-2)][j-(mode-2)]==' ' && b[i+(mode-1)][j-(mode-2)]!=' '){
+                            left=j+k-(mode-2);
+                            return left+1;
+                        }
+                    }
+                    //If last row and within bounds
+                    if(i-k+(mode-2)==rows-1 && j+k-(mode-2)>0){
+                        //If the bottom left of the sequence is open 
+                        if(b[i-k+(mode-2)][j+k-(mode-2)]==' '){
+                            left=j+k-(mode-2); 
+                            return left+1;
+                        }
+                    }
+                }
+            }
+            else{
+                tracker=1;
+            }
+        }
+    }
+    
+    //Checking top-half \ diagonals
+    for(int j=1; j<cols-1; j++){
+        for(int k=0; j+k<cols-1; k++){
+            //Checking one down and one right
+            if(b[k][j+k]==b[k+1][j+k+1] && b[k][j+k]!=' '){
+                tracker++;
+                //One away from win
+                if(tracker==mode-1){
+                    //Right side of diagonals
+                    //Diagonals above last row
+                    if(k+2<rows-1 && j+k+2<cols-1){
+                        //If next diagonal is empty and has chip beneath
+                        if(b[k+2][j+k+2]==' ' && b[k+3][j+k+2]!=' '){
+                            right=j+k+2;
+                            return right+1;
+                        }
+                    }
+                    //Last row diagonal doesn't check for chip beneath
+                    if(k+2==rows-1){
+                        if(b[k+2][j+k+2]==' '){
+                            right=j+k+2;
+                            return right+1;      
+                        }
+                    }
+                    //Left side of diagonals
+                    if(k-(mode-2)>=0 && j+k-(mode-2)>0){
+                        if(b[k-(mode-2)][j+k-(mode-2)]==' ' && b[k-(mode-2)+1][j+k-(mode-2)]!=' '){
+                            left=j+k-(mode-2);
+                            return left+1;
+                        }
+                    }
+                }
+            }
+            else{
+                tracker=1;
+            }
+        }
+    }
+    
+    //Checking bottom-half \ diagonals
+    for(int i=0; i<rows-1; i++){
+        for(int k=0; k+i<rows-1; k++){
+            //One down and one right
+            if(b[i+k][k]==b[i+k+1][k+1] && b[i+k][k]!=' '){
+                tracker++;
+                //One from win
+                if(tracker==mode-1){
+                    //Right side of diagonals
+                    //Diagonal above last row
+                    if(i+k+2<rows-1 && k+2<cols-1){
+                        //Checking next diagonal and slot beneath
+                        if(b[i+k+2][k+2]==' ' && b[i+k+3][k+2]!=' '){
+                            right=k+2;
+                            return right+1;
+                        }
+                    }
+                    //Diagonal on last row
+                    if(i+k+2==rows-1 && k+2<cols-1){
+                        //Only checking next diagonal on last row
+                        if(b[i+k+2][k+2]==' '){
+                            right=k+2;
+                            return right+1;
+                        }
+                    }
+                    
+                    //Left side of diagonals
+                    if(i+k-(mode-2)>=0 && k-(mode-2)>=0 && i+k-(mode-2)+1<rows-1){
+                        //Checking left of diagonal and if underneath has chip
+                        if(b[i+k-(mode-2)][k-(mode-2)]==' ' && b[i+k-(mode-2)+1][k-(mode-2)]!=' '){
+                            left=k-(mode-2);
+                            return left+1;
+                        }
+                    }
+                }
+            }
+            else{
+                tracker=1;
+            }
+        }
+    }
+    
 
    return -1;
 }
