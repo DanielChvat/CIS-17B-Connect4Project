@@ -91,15 +91,15 @@ bool User::checkPass(const string &password){
   for (char letter : password) {
     if (isdigit(letter)) {
       statusDig = true;
-      //if password contains a digit, then requirement is satisified
+      //if password contains a digit, then requirement is satisfied
     }
     if (isupper(letter)) {
       statusUp = true;
-      //if password contains uppercase, then requirement is satisified
+      //if password contains uppercase, then requirement is satisfied
     }
     if (islower(letter)) {
       statusLow = true;
-      //if password contains lowercase, then requirement is satisified
+      //if password contains lowercase, then requirement is satisfied
     }
   }
   return (statusLen&&statusDig&&statusUp&&statusLow);
@@ -118,6 +118,14 @@ bool User::checkPass(const string &password){
 // Get information about the user
 string User::getUserName() const {
   return userName;
+}
+
+string User::getName() const {
+  return name;
+}
+
+string User::getPassword() const {
+  return password;
 }
 
 //Set the information obtained
@@ -175,20 +183,23 @@ void User::Load(Datastream *data){
     ReadFromBuf(buffer, (char *)&UserNameSize, sizeof(unsigned long), cursor);
     ReadFromBuf(buffer, (char *)&passwordSize, sizeof(unsigned long), cursor);
 
-    char *temp = new char[nameSize];
+    char *temp = new char[nameSize + 1];
     ReadFromBuf(buffer, temp, nameSize, cursor);
+    temp[nameSize] = '\0';
     this->name = std::string((const char *)temp);
     delete []temp;
 
 
-    temp = new char[UserNameSize];
+    temp = new char[UserNameSize + 1];
     ReadFromBuf(buffer, temp, UserNameSize, cursor);
+    temp[UserNameSize] = '\0';
     this->userName = std::string((const char *)temp);
     delete []temp;
 
 
-    temp = new char[passwordSize];
+    temp = new char[passwordSize + 1];
     ReadFromBuf(buffer, temp, passwordSize, cursor);
+    temp[passwordSize] = '\0';
     this->password = std::string((const char *)temp);
     delete []temp;
 }
@@ -197,16 +208,16 @@ Datastream User::Serialize(){
     unsigned long nameSize = name.size();
     unsigned long UserNameSize = userName.size();
     unsigned long passwordSize = password.size();
-    unsigned long recordSize = nameSize + UserNameSize + passwordSize + 3 * sizeof(unsigned long);
     unsigned long cursor = 0L;
+    unsigned long recordSize = nameSize + UserNameSize + passwordSize + 3 * sizeof(unsigned long);
     char *buffer = new char[recordSize];
     
-     WriteToBuf(buffer, (const char *)&nameSize, sizeof(unsigned long), cursor);
-     WriteToBuf(buffer, (const char *)&UserNameSize, sizeof(unsigned long), cursor);
-     WriteToBuf(buffer, (const char *)&passwordSize, sizeof(unsigned long), cursor);
-     WriteToBuf(buffer, name.c_str() , nameSize, cursor);
-     WriteToBuf(buffer, userName.c_str(), UserNameSize, cursor);
-     WriteToBuf(buffer, password.c_str(), passwordSize, cursor);
+    WriteToBuf(buffer, (const char *)&nameSize, sizeof(unsigned long), cursor);
+    WriteToBuf(buffer, (const char *)&UserNameSize, sizeof(unsigned long), cursor);
+    WriteToBuf(buffer, (const char *)&passwordSize, sizeof(unsigned long), cursor);
+    WriteToBuf(buffer, name.c_str() , nameSize, cursor);
+    WriteToBuf(buffer, userName.c_str(), UserNameSize, cursor);
+    WriteToBuf(buffer, password.c_str(), passwordSize, cursor);
 
      Datastream data(buffer, recordSize);
      return data;

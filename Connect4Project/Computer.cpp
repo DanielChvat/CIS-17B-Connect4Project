@@ -65,7 +65,7 @@ int Computer::checkH(Board &board){
    char **b = board.getBoard();
    const int mode=board.getMode();
    const int rows=board.getRows();
-   const int cols=board.getCols();
+   const int cols=board.getColmns();
    int tracker=1,begin,end,select;
    
    //Looping through board
@@ -118,7 +118,7 @@ int Computer::checkV(Board &board){
    char **b = board.getBoard();
    const int mode=board.getMode();
    const int rows=board.getRows();
-   const int cols=board.getCols();
+   const int cols=board.getColmns();
    int tracker=1;
    
    
@@ -146,7 +146,7 @@ int Computer::checkD(Board &board){
     char **b = board.getBoard();
     const int mode=board.getMode();
     const int rows=board.getRows();
-    const int cols=board.getCols();
+    const int cols=board.getColmns();
     int tracker=1, left,right;
    
     //Checking top-half / diagonals
