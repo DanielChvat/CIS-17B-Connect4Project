@@ -1,8 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/cppFiles/file.h to edit this template
- */
-
 /* 
  * File:   Computer.h
  * Author: michaelsalib
@@ -12,6 +7,7 @@
 
 //User Libraries
 #include "Chip.h"
+#include "Board.h"
 
 #ifndef COMPUTER_H
 #define COMPUTER_H
@@ -22,6 +18,11 @@ class Computer{
         Computer();
         int rTurn(int);
         Chip getChip();
+        int cTurn(Board &,int);
+        int checkH(Board &); 
+        int checkV(Board &);
+        int checkD(Board &);
+        int build(Board &);
 };
 
 
