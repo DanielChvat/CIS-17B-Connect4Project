@@ -19,12 +19,10 @@ class Computer{
         int rTurn(int);
         Chip getChip();
         int cTurn(Board &,int);
-        int checkH(Board &); 
-        int checkV(Board &);
-        int checkD(Board &);
-        int build(Board &);
+        int checkH(Board &,int); 
+        int checkV(Board &,int);
+        int checkD(Board &,int);
 };
 
 
 #endif /* COMPUTER_H */
-
