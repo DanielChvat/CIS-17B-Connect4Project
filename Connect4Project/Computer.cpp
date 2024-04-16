@@ -36,36 +36,38 @@ int Computer::rTurn(int size){
 
 //Pre-Win Check, for computer to block player wins or finish connect
 int Computer::cTurn(Board &b,int size){
-   //Horizontal
-   if(checkH(b)!=-1){
-       //cout<<"H"<<endl;
-       return checkH(b);
+    const int mode=b.getMode();
+    for(int i=(mode-1); i>2; i--){
+        //Horizontal
+        if(checkH(b,i)!=-1){
+            //cout<<"H"<<endl;
+            return checkH(b,i);
+        }
+        //Vertical
+        if(checkV(b,i)!=-1){
+            //cout<<"V"<<endl;
+            return checkV(b,i);
+        }
+        //Diagonal
+        if(checkD(b,i)!=-1){
+            //cout<<"D"<<endl;
+            return checkD(b,i);
+        }
     }
-    //Vertical
-    if(checkV(b)!=-1){
-        //cout<<"V"<<endl;
-        return checkV(b);
-    }
-    //Diagonal
-    if(checkD(b)!=-1){
-        //cout<<"D"<<endl;
-        return checkD(b);
-    }
+
     //Random
-    else{
-        //cout<<"R"<<endl;
-        return (rTurn(size));
-    }
+    //cout<<"R"<<endl;
+    return (rTurn(size));
 
 }
 
 //Checking Horizontal Pre-win
-int Computer::checkH(Board &board){
+int Computer::checkH(Board &board,int num){
    //Copying private board info with getters
    char **b = board.getBoard();
    const int mode=board.getMode();
    const int rows=board.getRows();
-   const int cols=board.getColmns();
+   const int cols=board.getCols();
    int tracker=1,begin,end,select;
    
    //Looping through board
@@ -77,7 +79,7 @@ int Computer::checkH(Board &board){
                    begin=j; //Tracking first chip of sequence
                }
                tracker++; //Incrementing for each identical adjacent chip
-               if(tracker==mode-1){
+               if(tracker==num){
                    end=j+1; //Tracking last element of sequence
                    
                    //If there are open slots on either side of sequence
@@ -113,12 +115,12 @@ int Computer::checkH(Board &board){
 }
 
 //Checking Vertical Pre-win
-int Computer::checkV(Board &board){
+int Computer::checkV(Board &board,int num){
    //Copying private board info with getters
    char **b = board.getBoard();
    const int mode=board.getMode();
    const int rows=board.getRows();
-   const int cols=board.getColmns();
+   const int cols=board.getCols();
    int tracker=1;
    
    
@@ -129,7 +131,7 @@ int Computer::checkV(Board &board){
                if(b[i][j]!=' ' && b[i][j]==b[i-k][j] && i-k<rows){
                    tracker++;
                    //If the slot above the sequence is open
-                   if(tracker==mode-1 && b[i-(mode-1)][j]==' '){
+                   if(tracker==num && b[i-num][j]==' '){
                        return j+1;
                    }
                }
@@ -141,12 +143,12 @@ int Computer::checkV(Board &board){
    return -1;
 }
 
-int Computer::checkD(Board &board){
+int Computer::checkD(Board &board,int num){
     //Copying private board info with getters
     char **b = board.getBoard();
     const int mode=board.getMode();
     const int rows=board.getRows();
-    const int cols=board.getColmns();
+    const int cols=board.getCols();
     int tracker=1, left,right;
    
     //Checking top-half / diagonals
@@ -156,7 +158,7 @@ int Computer::checkD(Board &board){
             if(b[i-j][j]==b[i-(j+1)][j+1] && b[i-j][j]!=' '){
                 tracker++;
                 //If sequence is one-from winning
-                if(tracker==mode-1){
+                if(tracker==num){
                     //Checking right side
                     //If next column is valid
                     if(i-j-1>=0 && j+1<cols){
@@ -169,16 +171,16 @@ int Computer::checkD(Board &board){
                     
                     //Checking left side of diagonal
                     //Boundary check and not last diagonal
-                    if(i-j+(mode-2)<rows-1 && j-(mode-2)>=0){
-                        if(b[i-j+(mode-2)][j-(mode-2)]==' ' && b[i-j+(mode-1)][j-(mode-2)]!=' '){
-                            left=j-(mode-2);
+                    if(i-j+(num-1)<rows-1 && j-(num-1)>=0){
+                        if(b[i-j+(num-1)][j-(num-1)]==' ' && b[i-j+num][j-(num-1)]!=' '){
+                            left=j-(num-1);
                             return left+1;
                         }
                     }
                     //Last row doesn't need to check for chip beneath it
-                    if(i-j+(mode-2)==rows-1 && j-(mode-2)>=0){
-                        if(b[i-j+(mode-2)][j-(mode-2)]==' '){
-                            left=j-(mode-2);
+                    if(i-j+(num-1)==rows-1 && j-(num-1)>=0){
+                        if(b[i-j+(num-1)][j-(num-1)]==' '){
+                            left=j-(num-1);
                             return left+1;
                         }
                     }
@@ -198,7 +200,7 @@ int Computer::checkD(Board &board){
             if(b[i-k][j+k]!=' ' && b[i-k][j+k]==b[i-(k+1)][j+k+1]){
                 tracker++;
                 //One from winning
-                if(tracker==mode-1){
+                if(tracker==num){
                     //Checking right side of diagonal
                     //If within bounds
                     if(i-(k+2)>=0 && j+k+2<=cols-1){
@@ -211,19 +213,19 @@ int Computer::checkD(Board &board){
                  
                     //Checking left side of diagonals
                     //If above last row & within bounds
-                    if(i-k+(mode-2)<rows-2 && j+k-(mode-2)>0){
+                    if(i-k+(num-1)<rows-2 && j+k-(num-1)>0){
                         //Loop stops 2 elements early, so mode-2
                         //Checking if diagonal to the bottom left is open, and underneath is filled
-                        if(b[i+(mode-2)][j-(mode-2)]==' ' && b[i+(mode-1)][j-(mode-2)]!=' '){
-                            left=j+k-(mode-2);
+                        if(b[i+(num-1)][j-(num-1)]==' ' && b[i+num][j-(num-1)]!=' '){
+                            left=j+k-(num-1);
                             return left+1;
                         }
                     }
                     //If last row and within bounds
-                    if(i-k+(mode-2)==rows-1 && j+k-(mode-2)>0){
+                    if(i-k+(num-1)==rows-1 && j+k-(num-1)>0){
                         //If the bottom left of the sequence is open 
-                        if(b[i-k+(mode-2)][j+k-(mode-2)]==' '){
-                            left=j+k-(mode-2); 
+                        if(b[i-k+(num-1)][j+k-(num-1)]==' '){
+                            left=j+k-(num-1); 
                             return left+1;
                         }
                     }
@@ -242,7 +244,7 @@ int Computer::checkD(Board &board){
             if(b[k][j+k]==b[k+1][j+k+1] && b[k][j+k]!=' '){
                 tracker++;
                 //One away from win
-                if(tracker==mode-1){
+                if(tracker==num){
                     //Right side of diagonals
                     //Diagonals above last row
                     if(k+2<rows-1 && j+k+2<cols-1){
@@ -261,8 +263,8 @@ int Computer::checkD(Board &board){
                     }
                     //Left side of diagonals
                     if(k-(mode-2)>=0 && j+k-(mode-2)>0){
-                        if(b[k-(mode-2)][j+k-(mode-2)]==' ' && b[k-(mode-2)+1][j+k-(mode-2)]!=' '){
-                            left=j+k-(mode-2);
+                        if(b[k-(num-1)][j+k-(num-1)]==' ' && b[k-(num-1)+1][j+k-(num-1)]!=' '){
+                            left=j+k-(num-1);
                             return left+1;
                         }
                     }
@@ -281,7 +283,7 @@ int Computer::checkD(Board &board){
             if(b[i+k][k]==b[i+k+1][k+1] && b[i+k][k]!=' '){
                 tracker++;
                 //One from win
-                if(tracker==mode-1){
+                if(tracker==num){
                     //Right side of diagonals
                     //Diagonal above last row
                     if(i+k+2<rows-1 && k+2<cols-1){
@@ -301,10 +303,10 @@ int Computer::checkD(Board &board){
                     }
                     
                     //Left side of diagonals
-                    if(i+k-(mode-2)>=0 && k-(mode-2)>=0 && i+k-(mode-2)+1<rows-1){
-                        //Checking left of diagonal and if underneath has chip
-                        if(b[i+k-(mode-2)][k-(mode-2)]==' ' && b[i+k-(mode-2)+1][k-(mode-2)]!=' '){
-                            left=k-(mode-2);
+                    if(i+k-(num-1)>=0 && k-(num-1)>=0 && i+k-(num-1)+1<rows-1){
+                        //Checking left of diagonal and if underneath has a chip
+                        if(b[i+k-(num-1)][k-(num-1)]==' ' && b[i+k-(num-1)+1][k-(num-1)]!=' '){
+                            left=k-(num-1);
                             return left+1;
                         }
                     }
