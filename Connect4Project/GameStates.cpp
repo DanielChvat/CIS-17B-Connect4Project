@@ -96,6 +96,9 @@ void TurnState::Enter() {
 
 void TurnState::Run() {
     Player *p = game_->getCurPlayer();
+    // Display who's turn it is
+   cout<<"Color "<<game_->getCurPlayer()->getChip().getColor()<<"'s turn."<<endl;
+  
     game_->b_->plChip(
             p->tkTurn(game_->getSettings()->cols),
             p->getChip());

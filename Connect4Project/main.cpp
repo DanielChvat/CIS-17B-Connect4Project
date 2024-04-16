@@ -20,7 +20,7 @@ int main(int argc, char** argv) {
 
     // Win callback test
     game.registerWinCallback([](const Player* player){
-      std::cout << "Player: " << player->getChip().getColor() << std::endl;
+      std::cout << "Chip color: " << player->getChip().getColor() << std::endl;
     });
 
     game.run();
