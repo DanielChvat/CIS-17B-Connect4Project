@@ -17,6 +17,12 @@ using namespace std;
 
 int main(int argc, char** argv) {
     Game game;
+
+    // Win callback test
+    game.registerWinCallback([](const Player* player){
+      std::cout << "Player: " << player->getChip().getColor() << std::endl;
+    });
+
     game.run();
 
     return 0;
