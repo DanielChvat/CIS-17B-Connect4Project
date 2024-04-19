@@ -1,26 +1,34 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/cppFiles/class.h to edit this template
- */
-
-/* 
- * File:   Menu.h
- * Author: Daniel
- *
- * Created on March 8, 2024, 11:30 AM
- */
-
 #ifndef MENU_H
 #define MENU_H
 
-class Menu {
-public:
+#include <string>
+
+class Menu{
+  public:
+    //Constructor
     Menu();
-    Menu(const Menu& orig);
-    virtual ~Menu();
-private:
+
+    //Destructor
+    ~Menu();
+
+    //Menu Welcome Page
+    int welPage();
+
+    //get leaderboard stats
+    int getLeadBoard() const;
+
+    //set leaderboard stats
+    void setLeadBoard(int /*leadBoard*/);
+
+    //Functions
+    void logOut();    //Log out
+    void checkAcc();  //Check if account exists in binary file 
+    bool checkPass(const std::string &); /*Check if password for new users meets password requirements 
+  - returns true if password is valid, false if not
+*/
+
+  private:
+    int rank;
 
 };
-
-#endif /* MENU_H */
-
+#endif  
