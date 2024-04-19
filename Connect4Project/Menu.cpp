@@ -10,9 +10,6 @@ using namespace std;
 
 //Constructor
 Menu::Menu(){
-  numWins = 0;
-  numLost = 0;
-  numPlayed = 0;
   rank = 0;
 }
 
@@ -47,38 +44,4 @@ int Menu::welPage(){
     }
   }
   return choice;
-}
-
-//Getters
-int Menu::getNumPlayed() const {
-  //Read numPlayed from binary file
-  return numPlayed;
-}
-
-int Menu::getNumWins() const {
-  //Read numWins from binary file
-  return numWins;
-}
-
-int Menu::getNumLost() const {
-  //Read numLost from binary file
-  return numLost;
-}
-
-//Setters
-void Menu::setNumPlayed(int numPlayed) {
-  numPlayed = 0;
-  numPlayed = numWins + numLost;
-}
-
-void Menu::setNumWins(int numWins) {
-  // if(wIndx))
-  //     numWin++;
-}
-
-void Menu::setNumLost(int numLost) {
-  /*
-      if(player !win)
-        numLost++;
-  */
 }

@@ -1,17 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/cppFiles/class.cc to edit this template
- */
-
-/* 
- * File:   User.cpp
- * Author: Aurelia, Aurelisa, Brittany
- * 
- * Created on March 8, 2024, 11:29 AM
- */
-
 #include "User.h"
-#include "GameStates.h"
 
 #include <iostream>
 #include <cstring>
@@ -26,6 +13,9 @@ User::User(){ //set all values to null
   userName = '\0';
   password = '\0';
   accAge = 0;
+  numWins = 0;
+  numLost = 0;
+  numPlayed = 0;
 }
 
 //Destructor
@@ -64,7 +54,7 @@ void User::signUp(){
     cin >> password;
     status = checkPass(password);
   }
-  cout << "Sign up successful!" << endl;
+  cout << "Sign up successful!\n" << endl;
   startAccAge(); 
 }
 
@@ -132,20 +122,14 @@ void User::setUserName(/*std::string& userName*/) {
 */
 
 void User::startAccAge() {
-  // std::chrono::system_clock::time_point registDate;
-  // registDate = std::chrono::system_clock::now();
+  std::time_t pst =std::chrono::system_clock::to_time_t(std::chrono::system_clock::now()) - (8 * 60 * 60);
   
-  // // std::chrono::system_clock::time_point currTime = std::chrono::system_clock::now();
-  // time_t t =std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
-  // // cout << endl << ctime(&t) << endl;
-  // tm *now = std::localtime(&t);
-  // cout << std::put_time(now, "%m - %d - %y") << endl;
+  struct tm *pstDate = std::localtime(&pst);
+  // month = pstDate->tm_year + 1900;
+  // day = pstSate
 
-  // // std::chrono::duration<float> elapsed = currTime - registDate;
-  time_t t = time(NULL);
-  struct tm date = *localtime(&t);
-  cout << "Account enrolled on: " << date.tm_mon + 1 <<" - " << date.tm_mday << date.tm_year +1900 << endl;
-  
+  //UTC is 8 hours ahead of PST
+  cout << "Account enrolled on: " << std::put_time(pstDate, "%m - %d - %y") << std::endl;
   
   
   calcAge();
@@ -154,6 +138,99 @@ void User::startAccAge() {
 void User::calcAge(){ //This calculates the account age based on startAccAge
   // int days = elapsed.count()/(60*60*24);
   // cout << "Account age: " << days << " days." << endl;
+
+
   
-  //TODO figure out how to calculate the account age in days
+  std::time_t pst =std::chrono::system_clock::to_time_t(std::chrono::system_clock::now()) - (8 * 60 * 60);
+
+  //struct tm *pstDate = std::localtime(&pst);
+  
+  std::time_t curTime = std::chrono::system_clock::to_time_t(std::chrono::system_clock::now());
+  std::time_t timeDiff = curTime - pst;
+  //float time = difftime(curTime, pstDate);
+
+  int days = static_cast<int>(timeDiff / (60 * 60 * 24));
+  std::cout << "Account age: " << days << endl << endl;
+}
+
+void User::Load(Datastream *data){
+    unsigned long nameSize;
+    unsigned long UserNameSize;
+    unsigned long passwordSize;
+    unsigned long cursor = 0L;
+    const char *buffer = (const char *)data->data;
+
+    ReadFromBuf(buffer, (char *)&nameSize, sizeof(unsigned long), cursor);
+    ReadFromBuf(buffer, (char *)&UserNameSize, sizeof(unsigned long), cursor);
+    ReadFromBuf(buffer, (char *)&passwordSize, sizeof(unsigned long), cursor);
+
+    char *temp = new char[nameSize];
+    ReadFromBuf(buffer, temp, nameSize, cursor);
+    this->name = std::string((const char *)temp);
+    delete []temp;
+
+
+    temp = new char[UserNameSize];
+    ReadFromBuf(buffer, temp, UserNameSize, cursor);
+    this->userName = std::string((const char *)temp);
+    delete []temp;
+
+
+    temp = new char[passwordSize];
+    ReadFromBuf(buffer, temp, passwordSize, cursor);
+    this->password = std::string((const char *)temp);
+    delete []temp;
+}
+
+Datastream User::Serialize(){
+    unsigned long nameSize = name.size();
+    unsigned long UserNameSize = userName.size();
+    unsigned long passwordSize = password.size();
+    unsigned long recordSize = nameSize + UserNameSize + passwordSize + 3 * sizeof(unsigned long);
+    unsigned long cursor = 0L;
+    char *buffer = new char[recordSize];
+
+     WriteToBuf(buffer, (const char *)&nameSize, sizeof(unsigned long), cursor);
+     WriteToBuf(buffer, (const char *)&UserNameSize, sizeof(unsigned long), cursor);
+     WriteToBuf(buffer, (const char *)&passwordSize, sizeof(unsigned long), cursor);
+     WriteToBuf(buffer, name.c_str() , nameSize, cursor);
+     WriteToBuf(buffer, userName.c_str(), UserNameSize, cursor);
+     WriteToBuf(buffer, password.c_str(), passwordSize, cursor);
+
+     Datastream data(buffer, recordSize);
+     return data;
+}
+
+//Getters
+int User::getNumPlayed() const {
+  //Read numPlayed from binary file
+  return numPlayed;
+}
+
+int User::getNumWins() const {
+  //Read numWins from binary file
+  return numWins;
+}
+
+int User::getNumLost() const {
+  //Read numLost from binary file
+  return numLost;
+}
+
+//Setters
+void User::setNumPlayed(int numPlayed) {
+  numPlayed = 0;
+  numPlayed = numWins + numLost;
+}
+
+void User::setNumWins(int numWins) {
+  // if(wIndx))
+  //     numWin++;
+}
+
+void User::setNumLost(int numLost) {
+  /*
+      if(player !win)
+        numLost++;
+  */
 }

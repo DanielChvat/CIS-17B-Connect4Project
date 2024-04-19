@@ -1,21 +1,10 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/cppFiles/class.h to edit this template
- */
-
-/* 
- * File:   User.h
- * Author: Aurelia, Aurelisa, Brittany
- *
- * Created on March 8, 2024, 11:29 AM
- */
-
 #ifndef USER_H
 #define USER_H
 
 #include <string>
+#include "Database.h"
 
-class User{
+class User : public Serializable{
   public:
     //Constructor
     User();
@@ -31,7 +20,17 @@ class User{
     void setUserName(/*std::string& userName*/);
     void startAccAge();    //start account age when user first signed up
     void calcAge();        //calculate age of user's account  
-    
+
+    //Get information about the user
+    int getNumPlayed() const;
+    int getNumWins() const;
+    int getNumLost() const;
+
+    //Set the information obtained
+    void setNumPlayed(int /*numPlayed*/);
+    void setNumWins(int /*numWins*/);
+    void setNumLost(int /*numLost*/);
+
     //Functions
     void logIn();     //Log in for returning users
     void signUp();    //Sign up for new users
@@ -39,18 +38,23 @@ class User{
     bool checkPass(const std::string &); /*Check if password for new users meets password requirements 
   - returns true if password is valid, false if not
 */
-    
+    Datastream Serialize();
+    void Load(Datastream *);
+
+    friend Database;
 
   private:
     std::string name,
                 userName,
                 password;
-    int accAge; //The date that user made the account
+    int accAge, //The date that user made the account
         //month,
         //day,
         //year;
+        numWins,
+        numLost,
+        numPlayed;
 
 };
 
-#endif   /* USER_H */
-
+#endif  

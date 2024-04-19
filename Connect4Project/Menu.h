@@ -13,20 +13,11 @@ class Menu{
 
     //Menu Welcome Page
     int welPage();
-  
-    //Get information about the user
-    int getAccAge() const;
-    int getNumPlayed() const;
-    int getNumWins() const;
-    int getNumLost() const;
+
+    //get leaderboard stats
     int getLeadBoard() const;
 
-    //Set the information obtained
-    /*NEED SETNAME*/
-    void getAccAge();
-    void setNumPlayed(int /*numPlayed*/);
-    void setNumWins(int /*numWins*/);
-    void setNumLost(int /*numLost*/);
+    //set leaderboard stats
     void setLeadBoard(int /*leadBoard*/);
 
     //Functions
@@ -37,11 +28,7 @@ class Menu{
 */
 
   private:
-    int accAge,
-        numWins,
-        numLost,
-        numPlayed,
-        rank;
+    int rank;
 
 };
 #endif  
