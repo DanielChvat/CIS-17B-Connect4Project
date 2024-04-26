@@ -11,20 +11,18 @@
 
 #ifndef COMPUTER_H
 #define COMPUTER_H
-class Computer{
+class Computer: public Player{
     private:
-        Chip chip;
     public:
         Computer();
-        int rTurn(int);
-        Chip getChip();
-        int cTurn(Board &,int);
-        int checkH(Board &); 
-        int checkV(Board &);
-        int checkD(Board &);
-        int build(Board &);
+        Computer(Chip &);
+        int rTurn(Board *);
+        virtual int tkTurn(Board *b) override {return cTurn(b);}
+        int cTurn(Board *);
+        int checkH(Board *,int); 
+        int checkV(Board *,int);
+        int checkD(Board *,int);
 };
 
 
 #endif /* COMPUTER_H */
-

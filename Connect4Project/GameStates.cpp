@@ -10,6 +10,8 @@
 
 #include "Game.h"
 
+#include "Computer.h"
+
 #include <iostream>
 
 void SetupState::Run() {
@@ -24,8 +26,9 @@ void SetupState::setupPlayers() {
     game_->p_ = new Player*[game_->getSettings()->numP];
 
     // char tok;
-
-    for (int i = 0; i < game_->getSettings()->numP; i++) {
+    Chip cChip('c');
+    game_->p_[0] = new Computer(cChip);
+    for (int i = 1; i < game_->getSettings()->numP; i++) {
         //    std::cout << "Enter character to represent Player " << i+1 << ": ";
         //    std::cin >> tok;
         // TODO check existing tokens
@@ -96,8 +99,11 @@ void TurnState::Enter() {
 
 void TurnState::Run() {
     Player *p = game_->getCurPlayer();
+    // Display who's turn it is
+   cout<<"Color "<<game_->getCurPlayer()->getChip().getColor()<<"'s turn."<<endl;
+  
     game_->b_->plChip(
-            p->tkTurn(game_->getSettings()->cols),
+            p->tkTurn(game_->b_),
             p->getChip());
     game_->turns_++;
 
@@ -116,6 +122,7 @@ void EndState::Run() {
         std::cout << endl;
         game_->b_->displayBoard();
         std::cout << "Winner is player " << game_->winIdx + 1 << "!" << std::endl;
+        game_->raise_win_event(game_->p_[game_->winIdx]);
         // TODO update win count to player/user account
     } else {
         std::cout << "Y'all suck" << std::endl; // TODO Remove at some point
