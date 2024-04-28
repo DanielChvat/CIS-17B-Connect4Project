@@ -9,6 +9,10 @@
 #include "Chip.h"
 #include "Board.h"
 
+#include <thread>
+#include <chrono>
+
+
 #ifndef COMPUTER_H
 #define COMPUTER_H
 class Computer: public Player{
@@ -22,6 +26,12 @@ class Computer: public Player{
         int checkH(Board *,int); 
         int checkV(Board *,int);
         int checkD(Board *,int);
+        
+
+void delayOutput( int delaySec) {
+    cout<<"Computer is thinking..."<<endl;
+    this_thread::sleep_for(chrono::seconds(delaySec));
+}
 };
 
 

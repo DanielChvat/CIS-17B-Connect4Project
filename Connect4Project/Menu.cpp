@@ -1,6 +1,7 @@
 #include "User.h"
 #include "Menu.h"
-#include "GameStates.h"
+
+
 
 #include <iostream>
 #include <fstream>
@@ -19,7 +20,7 @@ Menu::~Menu() {
 }
 
 int Menu::welPage(){
-  User user;
+  User user ;
   
   int choice = 0;
   while (choice != 3){
@@ -39,7 +40,7 @@ int Menu::welPage(){
         break;
       case 3:
         //sign out 
-        user.logOut();
+       user.logOut();
         break;
     }
   }

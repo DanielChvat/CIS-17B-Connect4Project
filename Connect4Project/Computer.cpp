@@ -36,6 +36,7 @@ int Computer::rTurn(Board *b){
 
 //Pre-Win Check, for computer to block player wins or finish connect
 int Computer::cTurn(Board *b){
+    Computer::delayOutput(rand()%2 + 1); 
     const int mode=b->getMode();
     for(int i=(mode-1); i>2; i--){
         //Horizontal

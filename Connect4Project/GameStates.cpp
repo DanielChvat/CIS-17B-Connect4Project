@@ -26,7 +26,7 @@ void SetupState::setupPlayers() {
     game_->p_ = new Player*[game_->getSettings()->numP];
 
     // char tok;
-    Chip cChip('c');
+    Chip cChip('C');
     game_->p_[0] = new Computer(cChip);
     for (int i = 1; i < game_->getSettings()->numP; i++) {
         //    std::cout << "Enter character to represent Player " << i+1 << ": ";
@@ -94,13 +94,24 @@ void SetupState::setupBoard() {
 }
 
 void TurnState::Enter() {
-    game_->b_->displayBoard();
+    
+    if(game_->turns_ > 0 )
+        game_->b_->displayBoard();
+    
 }
 
 void TurnState::Run() {
     Player *p = game_->getCurPlayer();
     // Display who's turn it is
-   cout<<"Color "<<game_->getCurPlayer()->getChip().getColor()<<"'s turn."<<endl;
+   
+   
+   if(game_->pIdx_==0){
+       cout<<"\nComputer's turn " <<endl;
+       
+   }else{
+       cout<<"Player "<<game_->pIdx_+1;
+       cout<<": Color "<<game_->getCurPlayer()->getChip().getColor()<<"'s turn."<<endl;
+   }
   
     game_->b_->plChip(
             p->tkTurn(game_->b_),
@@ -121,7 +132,10 @@ void EndState::Run() {
     if (game_->winIdx != -1) {
         std::cout << endl;
         game_->b_->displayBoard();
-        std::cout << "Winner is player " << game_->winIdx + 1 << "!" << std::endl;
+        if(game_->winIdx == 0) 
+            cout<<"Computer Wins!";
+        else 
+            std::cout << "Winner is player " << game_->winIdx + 1 << "!" << std::endl;
         game_->raise_win_event(game_->p_[game_->winIdx]);
         // TODO update win count to player/user account
     } else {

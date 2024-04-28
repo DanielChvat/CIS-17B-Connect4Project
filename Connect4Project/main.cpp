@@ -11,13 +11,17 @@
 #include <ctime>
 
 #include "Game.h"
+#include "Menu.h"
 
 using namespace std;
 
-
 int main(int argc, char** argv) {
-    Game game;
-    game.run();
+
+
+
+//    Game game;
+//    game.run();
+
 
     return 0;
 }

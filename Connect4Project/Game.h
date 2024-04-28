@@ -15,6 +15,9 @@
 #include "GameStates.h"
 #include "Containers.h"
 
+#include <functional>
+#include <utility>
+
 //! Encapsulates Connect4 game logic
 class Game {
 private:
@@ -36,14 +39,35 @@ private:
   unsigned short pIdx_ = 0; // Index of current player
   int winIdx = -1; // Index of the winning player
 
+  std::function<void(const Player*)> win_callbacks[64];
+  unsigned short win_callbacks_size = 0;
+
+  void raise_win_event(const Player* player) {
+    for (size_t i=0; i < win_callbacks_size; i++) {
+      win_callbacks[i](player);
+    }
+  }
+
   //! Enqueue the next state
   void queueState(GameState* state) { stateQueue_.push(state); }
 
 public:
+
 	Game();
 	~Game();
 
 	void run();
+
+  /** Registers callback to be called when win event is raised.
+   *
+   * The win event is raised when a player wins and the game ends. The winning player is passed as an argument.
+   * @param callback Function object to be called when a player wins.
+   * @return Pointer to registered callback
+   */
+  const std::function<void(const Player*)>* registerWinCallback(std::function<void(const Player*)> callback) {
+    win_callbacks[win_callbacks_size++] = std::move(callback);
+    return &win_callbacks[win_callbacks_size];
+  }
 
   /** Searches for Player with Chip color matching c.
    *
