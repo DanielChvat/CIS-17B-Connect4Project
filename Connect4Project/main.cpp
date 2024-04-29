@@ -17,11 +17,13 @@ using namespace std;
 
 int main(int argc, char** argv) {
 
+    Game game;
+    game.run();
 
-
-//    Game game;
-//    game.run();
-
+    // Win callback test
+    game.registerWinCallback([](const Player* player){
+      std::cout << "Chip color: " << player->getChip().getColor() << std::endl;
+    });
 
     return 0;
 }

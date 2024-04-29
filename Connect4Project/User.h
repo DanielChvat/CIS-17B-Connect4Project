@@ -14,10 +14,14 @@ class User : public Serializable{
 
     //Get information about the user
     std::string getUserName() const;
-
+    std::string getPassword() const;
+    std::string getName() const;
+    
     //Set the information obtained
     /*NEED SETNAME*/
-    void setUserName(/*std::string& userName*/);
+    void setName(std::string& name);
+    void setUserName(std::string& userName);
+    void setPassword(std::string& password);
     void startAccAge();    //start account age when user first signed up
     void calcAge();        //calculate age of user's account  
 

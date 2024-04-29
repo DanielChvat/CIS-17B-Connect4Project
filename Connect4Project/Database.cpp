@@ -87,7 +87,7 @@ void Database::WriteRecords() {
 
   for (int i = 0; i < nRecords; i++) {
     Datastream recordData = Records[i].Serialize();
-    UserFile.write((char *)recordData.data, recordData.size);
+    UserFile.write(recordData.data, recordData.size);
   }
 
   UserFile.close();
