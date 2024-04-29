@@ -112,6 +112,7 @@ string User::getUserName() const {
   return userName;
 }
 
+
 string User::getName() const {
   return name;
 }

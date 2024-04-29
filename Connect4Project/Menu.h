@@ -2,7 +2,6 @@
 #define MENU_H
 
 #include "Game.h"
-
 #include <string>
 
 class Menu{
