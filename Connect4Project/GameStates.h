@@ -21,7 +21,7 @@ class Game;
 class GameState {
 public:
     GameState(Game *game) : game_(game) { }
-    virtual ~GameState() =default;
+    virtual ~GameState() = default;
 
     virtual void Enter() { }
     virtual void Run() { }

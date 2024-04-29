@@ -12,6 +12,7 @@
 #define BOARD_H
 
 #include "Chip.h"
+#include "Player.h"
 
 #include <iostream>
 
@@ -38,7 +39,12 @@ public:
    
     bool valPlace(int col);
     
-    char chkWin();
+    /*
+     * redefined function to return pointer to Player object below 
+     */
+    // char chkWin();
+    
+    Player *chkWin();
     
     //void plChip(int col, Chip  &chip);
     void plChip(int col, const Chip& chip);
@@ -46,6 +52,20 @@ public:
     bool isColFull(int col);
     
     bool isBrdFull() const;
+    
+    bool isTie() const;
+    
+    void clearBoard();
+    
+    unsigned short getRows() const { return this->rows; };
+    
+    unsigned short getColmns() const { return this->cols; };
+    
+    unsigned short getMode() const { return this->connect; };
+    
+    void setMode();
+    
+    bool isTie();
     
     virtual ~Board();
     

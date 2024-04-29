@@ -1,26 +1,38 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/cppFiles/class.h to edit this template
- */
-
 /* 
  * File:   Computer.h
- * Author: Daniel
+ * Author: michaelsalib
  *
- * Created on March 8, 2024, 11:29 AM
+ * Created on March 17, 2024
  */
+
+//User Libraries
+#include "Chip.h"
+#include "Board.h"
+
+#include <thread>
+#include <chrono>
+
 
 #ifndef COMPUTER_H
 #define COMPUTER_H
+class Computer: public Player{
+    private:
+    public:
+        Computer();
+        Computer(Chip &);
+        int rTurn(Board *);
+        virtual int tkTurn(Board *b) override {return cTurn(b);}
+        int cTurn(Board *);
+        int checkH(Board *,int); 
+        int checkV(Board *,int);
+        int checkD(Board *,int);
+        
 
-class Computer {
-public:
-    Computer();
-    Computer(const Computer& orig);
-    virtual ~Computer();
-private:
-
+void delayOutput( int delaySec) {
+    cout<<"Computer is thinking..."<<endl;
+    this_thread::sleep_for(chrono::seconds(delaySec));
+}
 };
 
-#endif /* COMPUTER_H */
 
+#endif /* COMPUTER_H */

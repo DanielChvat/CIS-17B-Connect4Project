@@ -1,6 +1,7 @@
 #ifndef MENU_H
 #define MENU_H
 
+#include "Game.h"
 #include <string>
 
 class Menu{
@@ -11,6 +12,7 @@ class Menu{
     //Destructor
     ~Menu();
 
+    void setup();
     //Menu Welcome Page
     int welPage();
 
