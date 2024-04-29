@@ -123,7 +123,7 @@ Datastream Database::ReadUserDatastream() {
 void EditUser(std::string name, std::string Username, std::string password, User *user){
     if(!user)return;
     
-    if(name != "")user->setName(name);
-    if(Username != "")user->setUserName(Username);
-    if(password != "")user->setPassword(password);
+//    if(name != "")user->setName(name);
+//    if(Username != "")user->setUserName(Username);
+//    if(password != "")user->setPassword(password);
 }

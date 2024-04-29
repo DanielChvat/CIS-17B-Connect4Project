@@ -11,19 +11,19 @@
 #include <ctime>
 
 #include "Game.h"
+#include "Menu.h"
 
 using namespace std;
 
-
 int main(int argc, char** argv) {
+
     Game game;
+    game.run();
 
     // Win callback test
     game.registerWinCallback([](const Player* player){
       std::cout << "Chip color: " << player->getChip().getColor() << std::endl;
     });
-
-    game.run();
 
     return 0;
 }

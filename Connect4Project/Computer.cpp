@@ -20,13 +20,13 @@ Computer::Computer(){
     this->chip='C';
 }
 
-//Get Function
-Chip Computer::getChip(){
-    return chip;
+Computer::Computer(Chip &c):Player(c){
+    
 }
 
 //Random Turn Function
-int Computer::rTurn(int size){
+int Computer::rTurn(Board *b){
+    int size=b->getColmns();
     int column;
     //Random column based on board size (size = number of columns)
     column=rand()%size+1;
@@ -35,8 +35,9 @@ int Computer::rTurn(int size){
 }
 
 //Pre-Win Check, for computer to block player wins or finish connect
-int Computer::cTurn(Board &b,int size){
-    const int mode=b.getMode();
+int Computer::cTurn(Board *b){
+    Computer::delayOutput(rand()%2 + 1); 
+    const int mode=b->getMode();
     for(int i=(mode-1); i>2; i--){
         //Horizontal
         if(checkH(b,i)!=-1){
@@ -57,17 +58,17 @@ int Computer::cTurn(Board &b,int size){
 
     //Random
     //cout<<"R"<<endl;
-    return (rTurn(size));
+    return (rTurn(b));
 
 }
 
 //Checking Horizontal Pre-win
-int Computer::checkH(Board &board,int num){
+int Computer::checkH(Board *board,int num){
    //Copying private board info with getters
-   char **b = board.getBoard();
-   const int mode=board.getMode();
-   const int rows=board.getRows();
-   const int cols=board.getColmns();
+   char **b = board->getBoard();
+   const int mode=board->getMode();
+   const int rows=board->getRows();
+   const int cols=board->getColmns();
    int tracker=1,begin,end,select;
    
    //Looping through board
@@ -115,12 +116,12 @@ int Computer::checkH(Board &board,int num){
 }
 
 //Checking Vertical Pre-win
-int Computer::checkV(Board &board,int num){
+int Computer::checkV(Board *board,int num){
    //Copying private board info with getters
-   char **b = board.getBoard();
-   const int mode=board.getMode();
-   const int rows=board.getRows();
-   const int cols=board.getColmns();
+   char **b = board->getBoard();
+   const int mode=board->getMode();
+   const int rows=board->getRows();
+   const int cols=board->getColmns();
    int tracker=1;
    
    
@@ -143,12 +144,12 @@ int Computer::checkV(Board &board,int num){
    return -1;
 }
 
-int Computer::checkD(Board &board,int num){
+int Computer::checkD(Board *board,int num){
     //Copying private board info with getters
-    char **b = board.getBoard();
-    const int mode=board.getMode();
-    const int rows=board.getRows();
-    const int cols=board.getColmns();
+    char **b = board->getBoard();
+    const int mode=board->getMode();
+    const int rows=board->getRows();
+    const int cols=board->getColmns();
     int tracker=1, left,right;
    
     //Checking top-half / diagonals

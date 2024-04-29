@@ -9,19 +9,29 @@
 #include "Chip.h"
 #include "Board.h"
 
+#include <thread>
+#include <chrono>
+
+
 #ifndef COMPUTER_H
 #define COMPUTER_H
-class Computer{
+class Computer: public Player{
     private:
-        Chip chip;
     public:
         Computer();
-        int rTurn(int);
-        Chip getChip();
-        int cTurn(Board &,int);
-        int checkH(Board &,int); 
-        int checkV(Board &,int);
-        int checkD(Board &,int);
+        Computer(Chip &);
+        int rTurn(Board *);
+        virtual int tkTurn(Board *b) override {return cTurn(b);}
+        int cTurn(Board *);
+        int checkH(Board *,int); 
+        int checkV(Board *,int);
+        int checkD(Board *,int);
+        
+
+void delayOutput( int delaySec) {
+    cout<<"Computer is thinking..."<<endl;
+    this_thread::sleep_for(chrono::seconds(delaySec));
+}
 };
 
 
