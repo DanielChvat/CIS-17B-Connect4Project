@@ -7,6 +7,7 @@
  */
 #include <iostream>
 #include "Player.h"
+#include "Board.h"
 
 /* 3/16/24 Noel Perez
  * 
@@ -39,7 +40,8 @@ Chip Player::getChip() const {
 /*Function definition for player to take turn with input validation
  * Noel 3/16/24
  */
-int::Player::tkTurn(int cols){
+int::Player::tkTurn(Board *b){
+    int cols= b->getColmns();
      int column=0;
         bool validInput = false;
 

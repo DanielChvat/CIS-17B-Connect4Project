@@ -7,6 +7,7 @@
  */
 #include "Chip.h"
 
+
 #ifndef PLAYER_H
 #define PLAYER_H
 
@@ -14,8 +15,11 @@ using namespace std;
 
 /* 3/16/24 Noel Perez
  */
+
+class Board;
+
 class Player {
-private:
+protected:
     Chip chip; 
     
 public:
@@ -27,10 +31,9 @@ public:
     
     virtual ~Player();
 
-    int tkTurn(int cols);
+    virtual int tkTurn(Board *);
     
     Chip getChip()const ;
 };
 
 #endif /* PLAYER_H */
-

@@ -21,11 +21,11 @@ class User;
 
 class Datastream {
 public:
-	Datastream(char *data, long size) : data(data), size(size){}
+    Datastream(char *data, long size) : data(data), size(size){}
     Datastream(){}
-	~Datastream();
-	char *data;
-	long size;
+    ~Datastream();
+    char *data;
+    long size;
 };
  
 class Serializable {
@@ -39,11 +39,11 @@ private:
 
 class Database {
 public:
-	Database(char *);	
-	~Database();
-	bool ValidateUser(char *, char *);	
+    Database(char *);	
+    ~Database();
+    bool ValidateUser(char *, char *);	
     void EditUser(std::string name = "", std::string Username = "", std::string password = "", User *user = nullptr);
-	void WriteRecords();
+    void WriteRecords();
     Datastream ReadUserDatastream();
 private:
 	std::fstream UserFile;

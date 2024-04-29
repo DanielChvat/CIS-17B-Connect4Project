@@ -40,3 +40,4 @@ Player* Game::getPlayer(char c) const {
   }
   return nullptr;
 }
+
