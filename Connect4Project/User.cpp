@@ -121,7 +121,7 @@ string User::getPassword() const {
 }
 
 //Set the information obtained
-void User::setUserName(/*std::string& userName*/) {
+void User::setUserName(std::string& userName) {
   cin >> userName;
 }
 
