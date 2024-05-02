@@ -16,6 +16,7 @@
 
 void SetupState::Run() {
     std::cout << "Welcome!\n";
+
     setupPlayers();
     if (!game_->b_) setupBoard();
 
@@ -67,7 +68,7 @@ void SetupState::setupBoard() {
      * be redundant.
      */
 
-    // Let user choose connect mode and scale board accordingly. 
+    // Let user choose connect mode and scale board accordingly.
     // Board has a ratio based on connect pattern
     int choice = 0;
     bool valid = false;
@@ -77,8 +78,6 @@ void SetupState::setupBoard() {
         if (choice >= 4) {
 
             game_->settings_.mode = choice;
-            game_->settings_.rows = (game_->settings_.mode + 2);
-            game_->settings_.cols = (game_->settings_.mode + 3);
 
             valid = true;
         } else {
@@ -86,8 +85,8 @@ void SetupState::setupBoard() {
         }
     }
 
-    game_->b_ = new Board( game_->getSettings()->rows,
-                           game_->getSettings()->cols,
+    game_->b_ = new Board( game_->getSettings()->mode+2,
+                           game_->getSettings()->mode+3,
                            game_->getSettings()->mode
                          );
 

@@ -22,9 +22,6 @@
 class Game {
 private:
   struct Settings {
-    // Board size TODO board should store and have getters for these
-    unsigned short rows = 0;
-    unsigned short cols = 0;
 
     unsigned short numP = 2; // Number of players
     unsigned short mode = 4; // Number of connected chips required to win
@@ -80,6 +77,7 @@ public:
 
   const Settings* getSettings() const { return &settings_; }
 
+  // GameState classes must be friends to access private members
   friend SetupState;
   friend TurnState;
   friend EndState;
