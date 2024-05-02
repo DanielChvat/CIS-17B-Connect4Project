@@ -5,12 +5,15 @@
 
 #include "Game.h"
 #include "Menu.h"
+#include "Computer.h"
 
 using namespace std;
 
 int main(int argc, char** argv) {
 
     Game game;
+    game.addPlayer(*new Computer(*new Chip('c')));
+    game.addPlayer(*new Computer(*new Chip('d')));
     game.run();
 
     // Win callback test

@@ -17,13 +17,14 @@
 void SetupState::Run() {
     std::cout << "Welcome!\n";
 
-    setupPlayers();
+    if (!game_->p_) setupPlayers();
     if (!game_->b_) setupBoard();
 
     game_->queueState(new TurnState(game_));
 }
 
 void SetupState::setupPlayers() {
+    game_->settings_.numP = 2;
     game_->p_ = new Player*[game_->getSettings()->numP];
 
     // char tok;
@@ -152,10 +153,12 @@ void EndState::Run() {
         delete game_->b_; // TODO clear the board without deleting it
         game_->b_ = nullptr;
         game_->turns_ = 0;
-
-        game_->queueState(new SetupState(game_));
     } else {
         std::cout << "Thanks for playing!\n";
-        game_->end_ = true;
+        game_->running_ = false;
     }
+
+    // Setup transition to setup state even if the game ends
+    // e.g. in case Game::run() is called again
+    game_->queueState(new SetupState(game_));
 }
