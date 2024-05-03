@@ -14,11 +14,14 @@
 
 #include "Database.h"
 #include "User.h"
+#include <iostream>
 #include <fstream>
 #include <string>
 using std::ios;
 
 Datastream::~Datastream() { delete[] this->data; }
+
+
 
 void Serializable::WriteToBuf(unsigned char *buffer, const char *data, unsigned long size, unsigned long &cursor){
     for(int i=0; i < size; i++){
@@ -37,7 +40,8 @@ Database::Database(char *FileName) {
   this->UserFile.open(FileName, ios::in | ios::out | ios::binary);
 
   if (!UserFile.is_open()) {
-    throw std::string("ERROR: Database could not be loaded!");
+      //std::cerr << "EROORROROROROR";
+    //throw std::string("ERROR: Database could not be loaded!");
   }
 
   // Logic For Loading Database all at once
@@ -81,7 +85,7 @@ void Database::WriteRecords() {
   if (!UserFile.is_open()) {
     UserFile.open(FileName, ios::out | ios::binary | ios::trunc);
     if (!UserFile) {
-      throw std::runtime_error("File could not be opened for writing.");
+      //throw std::runtime_error("File could not be opened for writing.");
     }
   }
 
@@ -101,19 +105,19 @@ Datastream Database::ReadUserDatastream() {
   UserFile.read(reinterpret_cast<char *>(&recordSize), sizeof(recordSize));
 
   if (UserFile.fail()) {
-    throw std::runtime_error("Failed to read record size.");
+    //throw std::runtime_error("Failed to read record size.");
   }
 
   // Allocate buffer for user data.
-  char *buffer = new char[recordSize];
+  unsigned char *buffer = new unsigned char[recordSize];
 
   // Read the user record data based on the size
-  UserFile.read(buffer, recordSize);
+  UserFile.read(reinterpret_cast<char *>(buffer), recordSize);
 
   // Check if read was successful
   if (UserFile.fail()) {
     delete[] buffer;
-    throw std::runtime_error("Failed to read user data.");
+    //throw std::runtime_error("Failed to read user data.");
   }
 
   return Datastream(buffer, recordSize);
@@ -126,4 +130,10 @@ void EditUser(std::string name, std::string Username, std::string password, User
     if(name != "")user->setName(name);
     if(Username != "")user->setUserName(Username);
     if(password != "")user->setPassword(password);
+}
+
+void Database::setRecords(User* records, int count) {
+    delete[] Records;
+    Records = records;
+    nRecords = count;
 }

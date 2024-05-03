@@ -9,6 +9,7 @@
       <itemPath>Chip.h</itemPath>
       <itemPath>Computer.h</itemPath>
       <itemPath>Containers.h</itemPath>
+      <itemPath>DBTest.h</itemPath>
       <itemPath>Database.h</itemPath>
       <itemPath>Game.h</itemPath>
       <itemPath>GameStates.h</itemPath>
@@ -28,6 +29,7 @@
       <itemPath>Chip.cpp</itemPath>
       <itemPath>Computer.cpp</itemPath>
       <itemPath>Containers.cpp</itemPath>
+      <itemPath>DBTest.cpp</itemPath>
       <itemPath>Database.cpp</itemPath>
       <itemPath>Game.cpp</itemPath>
       <itemPath>GameStates.cpp</itemPath>
@@ -88,6 +90,10 @@
       <item path="Containers.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Containers.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="DBTest.cpp" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="DBTest.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Database.cpp" ex="false" tool="1" flavor2="0">
       </item>
@@ -155,6 +161,10 @@
       <item path="Containers.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="Containers.h" ex="false" tool="3" flavor2="0">
+      </item>
+      <item path="DBTest.cpp" ex="false" tool="0" flavor2="0">
+      </item>
+      <item path="DBTest.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="Database.cpp" ex="false" tool="1" flavor2="0">
       </item>

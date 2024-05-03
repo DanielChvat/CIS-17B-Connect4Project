@@ -10,14 +10,24 @@
 #include <iostream>
 #include <ctime>
 
-#include "Game.h"
+
+#include "DBTest.h"
 
 using namespace std;
 
 
 int main(int argc, char** argv) {
-    Game game;
-    game.run();
+    cout << "Yuh" << endl;
+    const char* str = "User.bin";
+    char* filename = const_cast<char*>(str);
+    cout << filename << endl;
+    DBTest tester(filename);
+    tester.run();
+    
+//    Game game;
+//    game.run();
 
+    
+    
     return 0;
 }
