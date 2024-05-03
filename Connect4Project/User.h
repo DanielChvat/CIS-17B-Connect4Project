@@ -8,6 +8,7 @@ class User : public Serializable{
   public:
     //Constructor
     User();
+    User(std::string, std::string, std::string, int, int, int);
 
     //Destructor
     ~User();
