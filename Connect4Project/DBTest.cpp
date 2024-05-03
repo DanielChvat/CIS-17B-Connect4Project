@@ -46,7 +46,8 @@ void DBTest::run() {
                 break;
             case 0:
                 std::cout << "Exiting..." << std::endl;
-                break;
+                return;
+                
             default:
                 std::cout << "Invalid option, try again." << std::endl;
         }

@@ -17,7 +17,7 @@ using namespace std;
 
 
 int main(int argc, char** argv) {
-    cout << "Yuh" << endl;
+    
     const char* str = "User.bin";
     char* filename = const_cast<char*>(str);
     cout << filename << endl;

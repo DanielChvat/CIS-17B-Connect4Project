@@ -59,8 +59,7 @@ Database::Database(char *FileName) {
 Database::~Database() {
   delete[] FileName;
   delete[] Records;
-  delete FileName;
-  delete Records;
+  
 }
 
 User *Database::FetchUser(char *UserName) {

@@ -176,6 +176,8 @@ void User::Load(Datastream *data){
     ReadFromBuf(buffer, (unsigned char *)&UserNameSize, sizeof(unsigned long), cursor);
     ReadFromBuf(buffer, (unsigned char *)&passwordSize, sizeof(unsigned long), cursor);
 
+    cout << nameSize << endl;
+    cerr << nameSize;
     unsigned char *temp = new unsigned char[nameSize];
     ReadFromBuf(buffer, temp, nameSize, cursor);
     this->name = std::string((const char *)temp);
