@@ -31,6 +31,7 @@ class Menu{
     void startGame();
   private:
     int rank;
+//    Database *db;
 
 };
 #endif  

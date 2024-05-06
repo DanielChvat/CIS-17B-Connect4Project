@@ -1,5 +1,4 @@
 #include "User.h"
-#include "Database.h"
 
 #include <iostream>
 #include <cstring>
@@ -19,6 +18,15 @@ User::User(){ //set all values to null
   numPlayed = 0;
 }
 
+User::User(std::string name, std::string userName, std::string password, int nWins, int nLosses, int nPlayed){
+    this->name = name;
+    this->userName = userName;
+    this->password = password;
+    this->numLost = nLosses;
+    this->numPlayed = nPlayed;
+    this->numWins = nWins;
+}
+
 //Destructor
 User::~User(){
   //destroy dynamically allocated variables
@@ -26,9 +34,7 @@ User::~User(){
 
 //Functions
 void User::logIn(){
-  Database data("user.bin");
-  
-  
+  Database data("user.dat");
   cout << "Enter your username: ";
   cin >> userName;
 
@@ -40,34 +46,33 @@ void User::logIn(){
 }
 
 void User::signUp(){
-  User newUser;
-  
+    User *newUser = new User;
+ 
   cout << "Enter your name: ";
-  //cin >> name;
-  cin >> newUser.name;
+  cin >> newUser->name;
 
   cout << "Enter your username: ";
- //cin >> userName;
-  cin >> newUser.userName;
+  cin >> newUser->userName;
 
   cout << "Enter your password: ";
-  //cin >> password;
-  cin >> newUser.password;
+  cin >> newUser->password;
 
-  bool status = checkPass(newUser.password);
+  bool status = checkPass(newUser->password);
   
   while (!status) {
     cout << "\nPassword does not fulfill requirements."<< endl;
     cout << "Password must be 8-16 characters long and contain at least one uppercase letter, lowercase letter, and a digit." << endl;
     cout << "\nRe-enter password: ";
-    cin >> newUser.password;
-    status = checkPass(newUser.password);
+    cin >> newUser->password;
+    status = checkPass(newUser->password);
   }
+  Database data("user.dat");
+  data.EditUser(newUser->name, newUser->userName, newUser->password, newUser);
+  
+  //std::string name, std::string Username, std::string password, User *user
+  
   cout << "Sign up successful!\n" << endl;
   startAccAge(); 
-  
-  Database data("user.bin");
-  data.addUser(newUser);
 }
 
 void User::logOut(){
@@ -135,7 +140,15 @@ string User::getPassword() const {
 
 //Set the information obtained
 void User::setUserName(std::string& userName) {
-  cin >> userName;
+    this->userName = userName;
+}
+
+void User::setName(std::string& name) {
+    this->name = name;
+}
+
+void User::setPassword(std::string& password) {
+    this->password = password;
 }
 
 /*
@@ -204,6 +217,11 @@ void User::Load(Datastream *data){
     temp[passwordSize] = '\0';
     this->password = std::string((const char *)temp);
     delete []temp;
+    
+    
+    ReadFromBuf(buffer, (char *)&this->numWins, sizeof(int), cursor);
+    ReadFromBuf(buffer, (char *)&this->numLost, sizeof(int), cursor);
+    ReadFromBuf(buffer, (char *)&this->numPlayed, sizeof(int), cursor);         
 }
 
 Datastream User::Serialize(){
@@ -211,17 +229,21 @@ Datastream User::Serialize(){
     unsigned long UserNameSize = userName.size();
     unsigned long passwordSize = password.size();
     unsigned long cursor = 0L;
-    unsigned long recordSize = nameSize + UserNameSize + passwordSize + 3 * sizeof(unsigned long);
-    char *buffer = new char[recordSize];
+    unsigned long recordSize = nameSize + UserNameSize + passwordSize + 3 * sizeof(unsigned long) + 3 * sizeof(int);
+    char *buffer = new char[recordSize + sizeof(unsigned long)];
+    
+    WriteToBuf(buffer, (const char *)&recordSize, sizeof(unsigned long), cursor);
+    WriteToBuf(buffer, (const char *)&nameSize, sizeof(unsigned long), cursor);
+    WriteToBuf(buffer, (const char *)&UserNameSize, sizeof(unsigned long), cursor);
+    WriteToBuf(buffer, (const char *)&passwordSize, sizeof(unsigned long), cursor);
+    WriteToBuf(buffer, name.c_str() , nameSize, cursor);
+    WriteToBuf(buffer, userName.c_str(), UserNameSize, cursor);
+    WriteToBuf(buffer, password.c_str(), passwordSize, cursor);
+    WriteToBuf(buffer, (const char *)&this->numWins, sizeof(int), cursor);
+    WriteToBuf(buffer, (const char *)&this->numLost, sizeof(int), cursor);
+    WriteToBuf(buffer, (const char *)&this->numPlayed, sizeof(int), cursor);
 
-     WriteToBuf(buffer, (const char *)&nameSize, sizeof(unsigned long), cursor);
-     WriteToBuf(buffer, (const char *)&UserNameSize, sizeof(unsigned long), cursor);
-     WriteToBuf(buffer, (const char *)&passwordSize, sizeof(unsigned long), cursor);
-     WriteToBuf(buffer, name.c_str() , nameSize, cursor);
-     WriteToBuf(buffer, userName.c_str(), UserNameSize, cursor);
-     WriteToBuf(buffer, password.c_str(), passwordSize, cursor);
-
-     Datastream data(buffer, recordSize);
+     Datastream data(buffer, recordSize + sizeof(unsigned long));
      return data;
 }
 

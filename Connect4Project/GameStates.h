@@ -29,7 +29,10 @@ protected:
     Game *game_;
 };
 
-//! Encapsulates pre-game setup logic.
+/** Encapsulates pre-game setup logic.
+ *
+ * Defaults to 2 players and runs player setup if the player array is empty.
+ */
 class SetupState : public GameState {
 public:
     SetupState(Game *game) : GameState(game) { }
@@ -58,4 +61,3 @@ public:
 };
 
 #endif /* GAMESTATES_H */
-

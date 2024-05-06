@@ -39,19 +39,21 @@ private:
 
 class Database {
 public:
-    Database(char *);	
+    Database(std::string);	
     ~Database();
-    bool ValidateUser(char *, char *);	
+    bool ValidateUser(std::string, std::string);
+    void addUser(User);
     void EditUser(std::string name = "", std::string Username = "", std::string password = "", User *user = nullptr);
     void WriteRecords();
-    Datastream ReadUserDatastream();
+    User *FetchUser(std::string);
+    long UserCount() {return nRecords;}
 private:
-	std::fstream UserFile;
-	char *FileName;
-	User *Records;
-	long nRecords = 0;
-	User *FetchUser(char *);
+    std::fstream UserFile;
+    std::string FileName;
+    User *Records;
+    long nRecords = 0;
+    
+    Datastream ReadUserDatastream();
 };
 
 #endif /* DATABASE_H */
-

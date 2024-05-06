@@ -15,6 +15,7 @@
 #include "Database.h"
 #include "User.h"
 #include <fstream>
+#include <iostream>
 #include <string>
 using std::ios;
 
@@ -32,18 +33,30 @@ void Serializable::ReadFromBuf(const char *buffer, char *dst, unsigned long size
     }
 }
 
-Database::Database(char *FileName) {
+Database::Database(std::string FileName) {
   this->FileName = FileName;
-  this->UserFile.open(FileName, ios::in | ios::out | ios::binary);
-
+  this->UserFile.open(FileName, ios::in | ios::binary);
+  
   if (!UserFile.is_open()) {
-    throw std::string("ERROR: Database could not be loaded!");
+      this->UserFile.open(FileName, ios::out | ios::binary | ios::trunc);
+      
+      if (!UserFile.is_open()){
+          //throw std::string("ERROR: Database could not be loaded!");
+      }
+    
+      
   }
-
+  
+  
+   
+   if (!UserFile.is_open()) {
+        //throw std::runtime_error("ERROR: Database could not be re-opened for read-write operations.");
+    }
+   
   // Logic For Loading Database all at once
   UserFile.read((char *)&nRecords, sizeof(nRecords));
   Records = new User[nRecords];
-
+  
   // change made here for utilizing Load
   for (int i = 0; i < nRecords; i++) {
     Datastream userDataStream = ReadUserDatastream();
@@ -53,25 +66,21 @@ Database::Database(char *FileName) {
 }
 
 Database::~Database() {
-  delete[] FileName;
   delete[] Records;
-  delete FileName;
-  delete Records;
 }
 
-User *Database::FetchUser(char *UserName) {
-  User *temp = nullptr;
+User *Database::FetchUser(std::string UserName) {
   for (int i = 0; i < nRecords; i++) {
-    if (Records[i].userName == std::string(UserName))
-      temp = &Records[i];
+    if (Records[i].userName == UserName)
+        return &Records[i];
   }
-  return temp;
+  return nullptr;
 }
 
-bool Database::ValidateUser(char *UserName, char *Password) {
+bool Database::ValidateUser(std::string UserName, std::string Password) {
   User *temp = FetchUser(UserName);
-  if (!temp && std::string(Password) != temp->password)
-    return false;
+  
+  if (!temp || Password != temp->password) return false;
 
   return true;
 }
@@ -84,6 +93,8 @@ void Database::WriteRecords() {
       throw std::runtime_error("File could not be opened for writing.");
     }
   }
+  
+  UserFile.write((char *)&nRecords, sizeof(nRecords));
 
   for (int i = 0; i < nRecords; i++) {
     Datastream recordData = Records[i].Serialize();
@@ -120,10 +131,23 @@ Datastream Database::ReadUserDatastream() {
 }
 
 // Function for Admin to Edit User Data
-void EditUser(std::string name, std::string Username, std::string password, User *user){
+void Database::EditUser(std::string name, std::string Username, std::string password, User *user){
     if(!user)return;
     
-//    if(name != "")user->setName(name);
-//    if(Username != "")user->setUserName(Username);
-//    if(password != "")user->setPassword(password);
+    if(name != "") user->setName(name);
+    if(Username != "") user->setUserName(Username);
+    if(password != "") user->setPassword(password);
+}
+
+void Database::addUser(User newUser){
+    User *temp = new User[this->nRecords + 1];
+    
+    for(int i=0; i < this->nRecords; i++){
+        temp[i] = Records[i];
+    }
+    temp[nRecords] = newUser;
+    
+    delete []Records;
+    this->Records = temp;
+    nRecords++;
 }

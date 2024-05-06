@@ -1,9 +1,7 @@
 #include "User.h"
-#include "Menu.h"
 #include <iostream>
 #include <ctime>
 
-#include "Game.h"
 #include "Menu.h"
 #include "Computer.h"
 using namespace std; 
@@ -39,28 +37,35 @@ int Menu::welPage(){
   
   int choice = 0;
   while (choice != 3){
-    cout << "\nWELCOME PAGE" << endl;
+    cout << "WELCOME PAGE" << endl;
     cout << "1. Sign Up" << endl;
     cout << "2. Log in" << endl; 
-    cout << "3. Leaderboard" << endl;
-    cout << "4. Sign Out" << endl;
+//    cout << "3. Leaderboard" << endl;
+    cout << "3. Sign Out" << endl;
     cout << "Enter your choice: ";
     cin >> choice; 
+    cout << endl;
     
     switch(choice){
       case 1: 
         //start game
         user.signUp();
+        goto case2;
+        
         //startGame();
         break;
       case 2:
+        case2:
         user.logIn();
-        //display leaderboard
+          
         break;
       case 3:
         //sign out 
         user.logOut();
         break;
+    default:
+        return 0;
+            
     }
   }
   return choice;

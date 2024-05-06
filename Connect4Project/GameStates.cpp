@@ -16,13 +16,15 @@
 
 void SetupState::Run() {
     std::cout << "Welcome!\n";
-    setupPlayers();
+
+    if (!game_->p_) setupPlayers();
     if (!game_->b_) setupBoard();
 
     game_->queueState(new TurnState(game_));
 }
 
 void SetupState::setupPlayers() {
+    game_->settings_.numP = 2;
     game_->p_ = new Player*[game_->getSettings()->numP];
 
     // char tok;
@@ -67,7 +69,7 @@ void SetupState::setupBoard() {
      * be redundant.
      */
 
-    // Let user choose connect mode and scale board accordingly. 
+    // Let user choose connect mode and scale board accordingly.
     // Board has a ratio based on connect pattern
     int choice = 0;
     bool valid = false;
@@ -77,8 +79,6 @@ void SetupState::setupBoard() {
         if (choice >= 4) {
 
             game_->settings_.mode = choice;
-            game_->settings_.rows = (game_->settings_.mode + 2);
-            game_->settings_.cols = (game_->settings_.mode + 3);
 
             valid = true;
         } else {
@@ -86,8 +86,8 @@ void SetupState::setupBoard() {
         }
     }
 
-    game_->b_ = new Board( game_->getSettings()->rows,
-                           game_->getSettings()->cols,
+    game_->b_ = new Board( game_->getSettings()->mode+2,
+                           game_->getSettings()->mode+3,
                            game_->getSettings()->mode
                          );
 
@@ -153,10 +153,12 @@ void EndState::Run() {
         delete game_->b_; // TODO clear the board without deleting it
         game_->b_ = nullptr;
         game_->turns_ = 0;
-
-        game_->queueState(new SetupState(game_));
     } else {
         std::cout << "Thanks for playing!\n";
-        game_->end_ = true;
+        game_->running_ = false;
     }
+
+    // Setup transition to setup state even if the game ends
+    // e.g. in case Game::run() is called again
+    game_->queueState(new SetupState(game_));
 }
