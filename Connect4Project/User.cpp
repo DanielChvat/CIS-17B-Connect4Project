@@ -1,4 +1,5 @@
 #include "User.h"
+#include "Database.h"
 
 #include <iostream>
 #include <cstring>
@@ -25,6 +26,9 @@ User::~User(){
 
 //Functions
 void User::logIn(){
+  Database data("user.bin");
+  
+  
   cout << "Enter your username: ";
   cin >> userName;
 
@@ -36,26 +40,34 @@ void User::logIn(){
 }
 
 void User::signUp(){
+  User newUser;
+  
   cout << "Enter your name: ";
-  cin >> name;
+  //cin >> name;
+  cin >> newUser.name;
 
   cout << "Enter your username: ";
-  cin >> userName;
+ //cin >> userName;
+  cin >> newUser.userName;
 
   cout << "Enter your password: ";
-  cin >> password;
+  //cin >> password;
+  cin >> newUser.password;
 
-  bool status = checkPass(password);
+  bool status = checkPass(newUser.password);
   
   while (!status) {
     cout << "\nPassword does not fulfill requirements."<< endl;
     cout << "Password must be 8-16 characters long and contain at least one uppercase letter, lowercase letter, and a digit." << endl;
     cout << "\nRe-enter password: ";
-    cin >> password;
-    status = checkPass(password);
+    cin >> newUser.password;
+    status = checkPass(newUser.password);
   }
   cout << "Sign up successful!\n" << endl;
   startAccAge(); 
+  
+  Database data("user.bin");
+  data.addUser(newUser);
 }
 
 void User::logOut(){

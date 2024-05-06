@@ -9,7 +9,15 @@
 using namespace std;
 
 int main(int argc, char** argv) {
+    Menu menu; 
+    menu.welPage();
+    
+    // Game game;
+    // game.addPlayer(*new Computer(*new Chip('c')));
+    // game.addPlayer(*new Computer(*new Chip('d')));
+    // game.run();
 
+<<<<<<< Updated upstream
     Game game;
     game.run();
 
@@ -17,6 +25,12 @@ int main(int argc, char** argv) {
     game.registerWinCallback([](const Player* player){
       std::cout << "Chip color: " << player->getChip().getColor() << std::endl;
     });
+=======
+    // // Win callback test
+    // game.registerWinCallback([](const Player* player){
+    //   std::cout << "Chip color: " << player->getChip().getColor() << std::endl;
+    // });
+>>>>>>> Stashed changes
   
 //   User user;
 //   Menu menu; 

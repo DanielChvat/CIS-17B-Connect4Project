@@ -4,7 +4,7 @@
 #include <string>
 #include "Database.h"
 
-class User : public Serializable{
+class User : public Serializable {
   public:
     //Constructor
     User();

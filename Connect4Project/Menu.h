@@ -28,7 +28,7 @@ class Menu{
     bool checkPass(const std::string &); /*Check if password for new users meets password requirements 
   - returns true if password is valid, false if not
 */
-
+    void startGame();
   private:
     int rank;
 
