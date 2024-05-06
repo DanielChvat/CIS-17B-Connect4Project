@@ -44,12 +44,10 @@ Database::Database(std::string FileName) {
           //throw std::string("ERROR: Database could not be loaded!");
       }
     
-      UserFile.write(reinterpret_cast<const char*>(&nRecords), sizeof(nRecords));
-      UserFile.close();
       
   }
   
-   this->UserFile.open(FileName, std::ios::in | std::ios::out | std::ios::binary);
+  
    
    if (!UserFile.is_open()) {
         //throw std::runtime_error("ERROR: Database could not be re-opened for read-write operations.");
