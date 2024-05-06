@@ -36,12 +36,25 @@ void Serializable::ReadFromBuf(const char *buffer, char *dst, unsigned long size
 Database::Database(std::string FileName) {
   this->FileName = FileName;
   this->UserFile.open(FileName, ios::in | ios::binary);
-
+  
   if (!UserFile.is_open()) {
-    // ask if new database needs to be created with file name
-    throw std::string("ERROR: Database could not be loaded!");
+      this->UserFile.open(FileName, ios::out | ios::binary | ios::trunc);
+      
+      if (!UserFile.is_open()){
+          //throw std::string("ERROR: Database could not be loaded!");
+      }
+    
+      UserFile.write(reinterpret_cast<const char*>(&nRecords), sizeof(nRecords));
+      UserFile.close();
+      
   }
-
+  
+   this->UserFile.open(FileName, std::ios::in | std::ios::out | std::ios::binary);
+   
+   if (!UserFile.is_open()) {
+        //throw std::runtime_error("ERROR: Database could not be re-opened for read-write operations.");
+    }
+   
   // Logic For Loading Database all at once
   UserFile.read((char *)&nRecords, sizeof(nRecords));
   Records = new User[nRecords];
