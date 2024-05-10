@@ -176,7 +176,7 @@ int Computer::checkD(Board *board,int num){
                 if(tracker==num){
                     //Checking right side
                     //If next column is valid
-                    if(i-j-1>=0 && j+1<cols){
+                    if(i-j-2>=0 && j+1<cols){
                         //If next in sequence is open and has chip underneath
                         if(b[i-j-2][j+2]==' ' && b[i-j-1][j+2]!=' '){
                             right=j+2;
