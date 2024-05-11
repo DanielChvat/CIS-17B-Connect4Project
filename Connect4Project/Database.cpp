@@ -66,7 +66,8 @@ Database::Database(std::string FileName) {
 }
 
 Database::~Database() {
-  delete[] Records;
+    this->WriteRecords();
+    delete[] Records;
 }
 
 User *Database::FetchUser(std::string UserName) {
@@ -75,6 +76,10 @@ User *Database::FetchUser(std::string UserName) {
         return &Records[i];
   }
   return nullptr;
+}
+
+User *Database::FetchUser(int n){
+    return &this->Records[n];
 }
 
 bool Database::ValidateUser(std::string UserName, std::string Password) {
@@ -150,4 +155,20 @@ void Database::addUser(User newUser){
     delete []Records;
     this->Records = temp;
     nRecords++;
+}
+
+void Database::deleteUser(int n){
+    int offset = 0;
+    User *temp = new User[this->nRecords - 1];
+    for(int i=0; i < this->nRecords; i++){
+        if(i == n) {
+            offset = 1;
+            continue;
+        }
+        
+        temp[i - offset] = this->Records[i];
+    }
+    delete []this->Records;
+    this->Records = temp;
+    this->nRecords--;
 }

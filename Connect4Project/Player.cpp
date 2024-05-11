@@ -15,11 +15,14 @@
  */
 Player::Player() {
     this->chip = Chip();
+    this->won = false;
 }
 
 /* 1 param constructor takes in Chip object
  */
- Player::Player(const Chip &c) :  chip(c){ }
+ Player::Player(const Chip &c) :  chip(c){
+     this->won = false;
+ }
 /* 3/16/24 Noel Perez
  */
 //Player::Player( Chip c) {

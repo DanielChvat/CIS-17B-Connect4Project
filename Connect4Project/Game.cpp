@@ -62,4 +62,3 @@ Player* Game::getPlayer(char c) const noexcept {
   }
   return nullptr;
 }
-

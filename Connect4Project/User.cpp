@@ -1,4 +1,7 @@
 #include "User.h"
+#include "Game.h"
+#include "Menu.h"
+#include "Computer.h"
 
 #include <iostream>
 #include <cstring>
@@ -16,15 +19,17 @@ User::User(){ //set all values to null
   numWins = 0;
   numLost = 0;
   numPlayed = 0;
+  admin = false;
 }
 
-User::User(std::string name, std::string userName, std::string password, int nWins, int nLosses, int nPlayed){
+User::User(std::string name, std::string userName, std::string password, int nWins, int nLosses, int nPlayed, bool admin){
     this->name = name;
     this->userName = userName;
     this->password = password;
     this->numLost = nLosses;
     this->numPlayed = nPlayed;
     this->numWins = nWins;
+    this->admin = admin;
 }
 
 //Destructor
@@ -34,35 +39,67 @@ User::~User(){
 
 //Functions
 void User::logIn(){
+  Database data("user.dat");
+  
   cout << "Enter your username: ";
   cin >> userName;
 
   cout << "Enter your password: ";
   cin >> password;
 
+  if(data.ValidateUser(userName, password) && !data.FetchUser(userName)->isAdmin()){
+    cout << endl << "Login successful!\n";
+    Game game;
+    User *u = data.FetchUser(userName);
+    
+    Player *p = new Player(*new Chip('p'));
+    game.addPlayer(*new Computer(*new Chip('c')));
+    game.addPlayer(*p);
+    game.run();
+    
+    
+    if(p->getWon())u->setNumWins(u->getNumWins() + 1);
+    else u->setNumLost(u->getNumLost() + 1);
+    u->setNumPlayed();
+    
+  } else if (data.ValidateUser(userName, password) && data.FetchUser(userName)->isAdmin()){
+      cout << endl << "Login successful!\n";
+      Menu::adminMenu(data);
+  }else{
+      cout << endl << "Login failed\n";
+  }
+ 
   // BinFile binary;
   // binary.logIn("Data.bin", *data);
 }
 
 void User::signUp(){
+  User newUser;
+ 
   cout << "Enter your name: ";
-  cin >> name;
+  cin >> newUser.name;
 
   cout << "Enter your username: ";
-  cin >> userName;
+  cin >> newUser.userName;
 
   cout << "Enter your password: ";
-  cin >> password;
-
-  bool status = checkPass(password);
+  cin >> newUser.password;
+  bool status = checkPass(newUser.password);
+  status = true;
   
   while (!status) {
     cout << "\nPassword does not fulfill requirements."<< endl;
     cout << "Password must be 8-16 characters long and contain at least one uppercase letter, lowercase letter, and a digit." << endl;
     cout << "\nRe-enter password: ";
-    cin >> password;
-    status = checkPass(password);
+    cin >> newUser.password;
+    status = checkPass(newUser.password);
   }
+  Database data("user.dat");
+  data.addUser(newUser);
+//  data.EditUser(newUser->name, newUser->userName, newUser->password, newUser);
+  data.WriteRecords();
+  //std::string name, std::string Username, std::string password, User *user
+  
   cout << "Sign up successful!\n" << endl;
   startAccAge(); 
 }
@@ -213,7 +250,8 @@ void User::Load(Datastream *data){
     
     ReadFromBuf(buffer, (char *)&this->numWins, sizeof(int), cursor);
     ReadFromBuf(buffer, (char *)&this->numLost, sizeof(int), cursor);
-    ReadFromBuf(buffer, (char *)&this->numPlayed, sizeof(int), cursor);         
+    ReadFromBuf(buffer, (char *)&this->numPlayed, sizeof(int), cursor);  
+    ReadFromBuf(buffer, (char *)&this->admin, sizeof(bool), cursor);
 }
 
 Datastream User::Serialize(){
@@ -221,7 +259,7 @@ Datastream User::Serialize(){
     unsigned long UserNameSize = userName.size();
     unsigned long passwordSize = password.size();
     unsigned long cursor = 0L;
-    unsigned long recordSize = nameSize + UserNameSize + passwordSize + 3 * sizeof(unsigned long) + 3 * sizeof(int);
+    unsigned long recordSize = nameSize + UserNameSize + passwordSize + 3 * sizeof(unsigned long) + 3 * sizeof(int) + sizeof(bool);
     char *buffer = new char[recordSize + sizeof(unsigned long)];
     
     WriteToBuf(buffer, (const char *)&recordSize, sizeof(unsigned long), cursor);
@@ -234,6 +272,7 @@ Datastream User::Serialize(){
     WriteToBuf(buffer, (const char *)&this->numWins, sizeof(int), cursor);
     WriteToBuf(buffer, (const char *)&this->numLost, sizeof(int), cursor);
     WriteToBuf(buffer, (const char *)&this->numPlayed, sizeof(int), cursor);
+    WriteToBuf(buffer, (const char *)&this->admin, sizeof(bool), cursor);
 
      Datastream data(buffer, recordSize + sizeof(unsigned long));
      return data;
@@ -256,19 +295,14 @@ int User::getNumLost() const {
 }
 
 //Setters
-void User::setNumPlayed(int numPlayed) {
-  numPlayed = 0;
-  numPlayed = numWins + numLost;
+void User::setNumPlayed() {
+    this->numPlayed = this->numLost + this->numWins;
 }
 
 void User::setNumWins(int numWins) {
-  // if(wIndx))
-  //     numWin++;
+    this->numWins = numWins;
 }
 
 void User::setNumLost(int numLost) {
-  /*
-      if(player !win)
-        numLost++;
-  */
+    this->numLost = numLost;
 }

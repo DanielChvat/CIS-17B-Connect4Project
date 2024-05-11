@@ -61,4 +61,3 @@ public:
 };
 
 #endif /* GAMESTATES_H */
-

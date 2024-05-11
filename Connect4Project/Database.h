@@ -43,9 +43,11 @@ public:
     ~Database();
     bool ValidateUser(std::string, std::string);
     void addUser(User);
+    void deleteUser(int);
     void EditUser(std::string name = "", std::string Username = "", std::string password = "", User *user = nullptr);
     void WriteRecords();
     User *FetchUser(std::string);
+    User *FetchUser(int);
     long UserCount() {return nRecords;}
 private:
     std::fstream UserFile;
@@ -57,4 +59,3 @@ private:
 };
 
 #endif /* DATABASE_H */
-

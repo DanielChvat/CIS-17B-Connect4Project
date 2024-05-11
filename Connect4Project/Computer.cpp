@@ -18,6 +18,7 @@ using namespace std;
 //Constructor
 Computer::Computer(){
     this->chip='C';
+    srand(time(0));
 }
 
 Computer::Computer(Chip &c):Player(c){
@@ -26,11 +27,22 @@ Computer::Computer(Chip &c):Player(c){
 
 //Random Turn Function
 int Computer::rTurn(Board *b){
-    int size=b->getColmns();
+    char **a = b->getBoard();
+    int size = b->getColmns();
+    const int rows = b->getRows();
     int column;
+    bool valid=false;
     //Random column based on board size (size = number of columns)
-    column=rand()%size+1;
- 
+    do{
+        column=rand()%size+1;
+        if(a[0][column]!=' '){
+            valid=false;
+        }
+        else{
+            valid=true;
+        }
+    }while(!valid);
+    
     return column;
 }
 
@@ -38,7 +50,7 @@ int Computer::rTurn(Board *b){
 int Computer::cTurn(Board *b){
     Computer::delayOutput(rand()%2 + 1); 
     const int mode=b->getMode();
-    for(int i=(mode-1); i>2; i--){
+    for(int i=(mode-1); i>1; i--){
         //Horizontal
         if(checkH(b,i)!=-1){
             //cout<<"H"<<endl;
@@ -128,14 +140,17 @@ int Computer::checkV(Board *board,int num){
    for(int j=0; j<cols; j++){
        for(int i=rows-1; i>0; i--){
            for(int k=1; k<mode && i-k>=0; k++){
-               //Iterating vertically through each column
-               if(b[i][j]!=' ' && b[i][j]==b[i-k][j] && i-k<rows){
-                   tracker++;
-                   //If the slot above the sequence is open
-                   if(tracker==num && b[i-num][j]==' '){
-                       return j+1;
-                   }
+               if(b[0][j]==' '){
+                   //Iterating vertically through each column
+                   if(b[i][j]!=' ' && b[i][j]==b[i-k][j] && i-k<rows){
+                        tracker++;
+                         //If the slot above the sequence is open
+                        if(tracker==num && b[i-num][j]==' '){
+                        return j+1;
+                        }
+                    }
                }
+
            }
            tracker=1;
        }
@@ -162,7 +177,7 @@ int Computer::checkD(Board *board,int num){
                 if(tracker==num){
                     //Checking right side
                     //If next column is valid
-                    if(i-j-1>=0 && j+1<cols){
+                    if(i-j-2>=0 && j+1<cols){
                         //If next in sequence is open and has chip underneath
                         if(b[i-j-2][j+2]==' ' && b[i-j-1][j+2]!=' '){
                             right=j+2;
