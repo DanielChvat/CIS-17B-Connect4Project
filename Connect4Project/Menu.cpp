@@ -52,11 +52,7 @@ void Menu::welPage(){
       case 1: 
         //start game
         user.signUp();
-        goto case2;
-        
-        break;
       case 2:
-        case2:
         user.logIn();
           
         break;
@@ -105,47 +101,46 @@ void Menu::EditUser(Database &data){
     std::string temp;
     bool admin;
     
-    cout << "Do you Want to Edit or Delete (E/D): ";
+    cout << "Do you Want to Edit or Delete(E/D): ";
     cin >> choice;
     
     if(tolower(choice) == 'e'){
-        cout << "EDITING RECORDS" << endl;
-    cout << "Record #: ";
-    cin >> n;
-    
-    User *u = data.FetchUser(n-1);
-    
-    cout << "CURRENT" << endl << endl;
-    cout << "Username    : " << u->getUserName() << endl;
-    cout << "Password    : " << u->getPassword() << endl;
-    cout << "Admin       : " << (u->isAdmin()?"Yes":"No") << endl;
-    cout << "Wins        : " << u->getNumWins() << endl;
-    cout << "Losses      : " << u->getNumLost() << endl;
-    cout << "Games Played: " << u->getNumPlayed() << endl << endl;
-    
-    cout << "NEW" << endl << endl;
-    cout << "NEW USERNAME: ";
-    cin >> temp;
-    u->setUserName(temp);
-    cout << "NEW PASSWORD: ";
-    cin >> temp;
-    u->setPassword(temp);
-    cout << "NEW ADMINSTATUS: ";
-    cin >> admin;
-    u->setAdmin(admin);
-    cout << "NEW WINCOUNT: ";
-    cin >> n;
-    u->setNumWins(n);
-    cout << "NEW LOSSCOUNT: ";
-    cin >> n;
-    u->setNumLost(n);
-    
-    u->setNumPlayed();
-    
-    
-    
-    }
-    else if(tolower(choice) == 'd'){
-        
+        cout << "EDITING RECORD" << endl;
+        cout << "Record #: ";
+        cin >> n;
+
+        User *u = data.FetchUser(n-1);
+
+        cout << "CURRENT" << endl << endl;
+        cout << "Username    : " << u->getUserName() << endl;
+        cout << "Password    : " << u->getPassword() << endl;
+        cout << "Admin       : " << (u->isAdmin()?"Yes":"No") << endl;
+        cout << "Wins        : " << u->getNumWins() << endl;
+        cout << "Losses      : " << u->getNumLost() << endl;
+        cout << "Games Played: " << u->getNumPlayed() << endl << endl;
+
+        cout << "NEW" << endl << endl;
+        cout << "NEW USERNAME: ";
+        cin >> temp;
+        u->setUserName(temp);
+        cout << "NEW PASSWORD: ";
+        cin >> temp;
+        u->setPassword(temp);
+        cout << "NEW ADMINSTATUS (1/0): ";
+        cin >> admin;
+        u->setAdmin(admin);
+        cout << "NEW WINCOUNT: ";
+        cin >> n;
+        u->setNumWins(n);
+        cout << "NEW LOSSCOUNT: ";
+        cin >> n;
+        u->setNumLost(n);
+
+        u->setNumPlayed();
+    }else if(tolower(choice) == 'd'){
+        cout << "DELETING RECORD" << endl;
+        cout << "Record #: ";
+        cin >> n;
+        data.deleteUser(n-1);
     }
 }

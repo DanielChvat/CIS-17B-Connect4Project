@@ -156,3 +156,19 @@ void Database::addUser(User newUser){
     this->Records = temp;
     nRecords++;
 }
+
+void Database::deleteUser(int n){
+    int offset = 0;
+    User *temp = new User[this->nRecords - 1];
+    for(int i=0; i < this->nRecords; i++){
+        if(i == n) {
+            offset = 1;
+            continue;
+        }
+        
+        temp[i - offset] = this->Records[i];
+    }
+    delete []this->Records;
+    this->Records = temp;
+    this->nRecords--;
+}
