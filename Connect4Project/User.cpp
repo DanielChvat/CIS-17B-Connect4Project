@@ -1,4 +1,6 @@
 #include "User.h"
+#include "Game.h"
+#include "Computer.h"
 
 #include <iostream>
 #include <cstring>
@@ -41,34 +43,44 @@ void User::logIn(){
   cout << "Enter your password: ";
   cin >> password;
 
+  if(data.ValidateUser(userName, password) == true){
+    cout << "Login successful!\n";
+    Game game;
+    game.addPlayer(*new Player(*new Chip('c')));
+    game.addPlayer(*new Computer(*new Chip('d')));
+    game.run();
+  } else{
+      cout << "Login failed\n";
+  }
+ 
   // BinFile binary;
   // binary.logIn("Data.bin", *data);
 }
 
 void User::signUp(){
-    User *newUser = new User;
+  User newUser;
  
   cout << "Enter your name: ";
-  cin >> newUser->name;
+  cin >> newUser.name;
 
   cout << "Enter your username: ";
-  cin >> newUser->userName;
+  cin >> newUser.userName;
 
   cout << "Enter your password: ";
-  cin >> newUser->password;
-
-  bool status = checkPass(newUser->password);
+  cin >> newUser.password;
+  bool status = checkPass(newUser.password);
   
   while (!status) {
     cout << "\nPassword does not fulfill requirements."<< endl;
     cout << "Password must be 8-16 characters long and contain at least one uppercase letter, lowercase letter, and a digit." << endl;
     cout << "\nRe-enter password: ";
-    cin >> newUser->password;
-    status = checkPass(newUser->password);
+    cin >> newUser.password;
+    status = checkPass(newUser.password);
   }
   Database data("user.dat");
-  data.EditUser(newUser->name, newUser->userName, newUser->password, newUser);
-  
+  data.addUser(newUser);
+//  data.EditUser(newUser->name, newUser->userName, newUser->password, newUser);
+  data.WriteRecords();
   //std::string name, std::string Username, std::string password, User *user
   
   cout << "Sign up successful!\n" << endl;

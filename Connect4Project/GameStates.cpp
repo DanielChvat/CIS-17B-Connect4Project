@@ -107,6 +107,7 @@ void TurnState::Run() {
    
    if(game_->pIdx_==0){
        cout<<"\nComputer's turn " <<endl;
+       game_->b_->displayBoard(); //JUST ADDED,DELETE IF NOT WORKING
        
    }else{
        cout<<"Player "<<game_->pIdx_+1;
