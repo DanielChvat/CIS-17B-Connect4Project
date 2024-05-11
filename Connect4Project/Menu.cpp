@@ -1,6 +1,8 @@
 #include "User.h"
 #include <iostream>
 #include <ctime>
+#include <string>
+#include <cctype>
 
 #include "Menu.h"
 #include "Computer.h"
@@ -66,7 +68,7 @@ void Menu::welPage(){
   }
 }
 
-void Menu::adminMenu(){
+void Menu::adminMenu(Database &data){
     char choice;
     do{
         cout << "ADMIN VIEW" << endl;
@@ -77,15 +79,14 @@ void Menu::adminMenu(){
         cin >> choice;
         
         switch(choice){
-            case '1': Menu::displayUsers();break;
-            case '2': break;
+            case '1': Menu::displayUsers(data);break;
+            case '2': Menu::EditUser(data);break;
         }
     }while(choice != '3');
     
 }
 
-void Menu::displayUsers(){
-    Database data("user.dat");
+void Menu::displayUsers(Database &data){
     for(int i = 0; i < data.UserCount(); i++){
         User *u = data.FetchUser(i);
         cout << "User " << i + 1 << endl;
@@ -95,5 +96,56 @@ void Menu::displayUsers(){
         cout << "Wins        : " << u->getNumWins() << endl;
         cout << "Losses      : " << u->getNumLost() << endl;
         cout << "Games Played: " << u->getNumPlayed() << endl << endl;
+    }
+}
+
+void Menu::EditUser(Database &data){
+    int n;
+    char choice;
+    std::string temp;
+    bool admin;
+    
+    cout << "Do you Want to Edit or Delete (E/D): ";
+    cin >> choice;
+    
+    if(tolower(choice) == 'e'){
+        cout << "EDITING RECORDS" << endl;
+    cout << "Record #: ";
+    cin >> n;
+    
+    User *u = data.FetchUser(n-1);
+    
+    cout << "CURRENT" << endl << endl;
+    cout << "Username    : " << u->getUserName() << endl;
+    cout << "Password    : " << u->getPassword() << endl;
+    cout << "Admin       : " << (u->isAdmin()?"Yes":"No") << endl;
+    cout << "Wins        : " << u->getNumWins() << endl;
+    cout << "Losses      : " << u->getNumLost() << endl;
+    cout << "Games Played: " << u->getNumPlayed() << endl << endl;
+    
+    cout << "NEW" << endl << endl;
+    cout << "NEW USERNAME: ";
+    cin >> temp;
+    u->setUserName(temp);
+    cout << "NEW PASSWORD: ";
+    cin >> temp;
+    u->setPassword(temp);
+    cout << "NEW ADMINSTATUS: ";
+    cin >> admin;
+    u->setAdmin(admin);
+    cout << "NEW WINCOUNT: ";
+    cin >> n;
+    u->setNumWins(n);
+    cout << "NEW LOSSCOUNT: ";
+    cin >> n;
+    u->setNumLost(n);
+    
+    u->setNumPlayed();
+    
+    
+    
+    }
+    else if(tolower(choice) == 'd'){
+        
     }
 }

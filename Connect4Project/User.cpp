@@ -64,7 +64,7 @@ void User::logIn(){
     
   } else if (data.ValidateUser(userName, password) && data.FetchUser(userName)->isAdmin()){
       cout << endl << "Login successful!\n";
-      Menu::adminMenu();
+      Menu::adminMenu(data);
   }else{
       cout << endl << "Login failed\n";
   }

@@ -30,8 +30,9 @@ class Menu{
   - returns true if password is valid, false if not
 */
     
-    static void adminMenu();
-    static void displayUsers();
+    static void adminMenu(Database &);
+    static void displayUsers(Database &);
+    static void EditUser(Database &);
   private:
     int rank;
 //    Database *db;

@@ -44,6 +44,7 @@ class User : public Serializable{
   - returns true if password is valid, false if not
 */
     bool isAdmin(){return this->admin;}
+    void setAdmin(bool b){this->admin = b;}
     Datastream Serialize();
     void Load(Datastream *);
     
