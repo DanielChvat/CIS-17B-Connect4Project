@@ -137,6 +137,7 @@ void EndState::Run() {
             cout<<"Computer Wins!";
         else 
             std::cout << "Winner is player " << game_->winIdx + 1 << "!" << std::endl;
+        game_->p_[game_->winIdx]->setWon(true);
         game_->raise_win_event(game_->p_[game_->winIdx]);
         // TODO update win count to player/user account
     } else {

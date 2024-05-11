@@ -18,6 +18,7 @@ using namespace std;
 //Constructor
 Computer::Computer(){
     this->chip='C';
+    srand(time(0));
 }
 
 Computer::Computer(Chip &c):Player(c){
@@ -26,15 +27,15 @@ Computer::Computer(Chip &c):Player(c){
 
 //Random Turn Function
 int Computer::rTurn(Board *b){
-    char **b = board->getBoard();
-    int size = board->getColmns();
-    const int rows = board->getRows();
+    char **a = b->getBoard();
+    int size = b->getColmns();
+    const int rows = b->getRows();
     int column;
     bool valid=false;
     //Random column based on board size (size = number of columns)
     do{
         column=rand()%size+1;
-        if(b[0][column]!=' '){
+        if(a[0][column]!=' '){
             valid=false;
         }
         else{

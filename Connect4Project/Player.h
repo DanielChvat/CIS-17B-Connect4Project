@@ -21,6 +21,7 @@ class Board;
 class Player {
 protected:
     Chip chip; 
+    bool won;
     
 public:
     Player();
@@ -32,6 +33,10 @@ public:
     virtual ~Player();
 
     virtual int tkTurn(Board *);
+    
+    void setWon(bool s){this->won = s;}
+    
+    bool getWon(){return won;}
     
     Chip getChip()const ;
 };

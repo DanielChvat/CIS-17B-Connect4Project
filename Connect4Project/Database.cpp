@@ -66,7 +66,8 @@ Database::Database(std::string FileName) {
 }
 
 Database::~Database() {
-  delete[] Records;
+    this->WriteRecords();
+    delete[] Records;
 }
 
 User *Database::FetchUser(std::string UserName) {

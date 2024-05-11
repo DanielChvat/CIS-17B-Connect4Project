@@ -43,12 +43,22 @@ void User::logIn(){
   cout << "Enter your password: ";
   cin >> password;
 
-  if(data.ValidateUser(userName, password) == true){
+  if(data.ValidateUser(userName, password)){
     cout << "Login successful!\n";
     Game game;
-    game.addPlayer(*new Player(*new Chip('c')));
-    game.addPlayer(*new Computer(*new Chip('d')));
+    User *u = data.FetchUser(userName);
+    
+    Player *p = new Player(*new Chip('p'));
+    game.addPlayer(*new Computer(*new Chip('c')));
+    game.addPlayer(*p);
     game.run();
+    
+    
+    if(p->getWon())u->setNumWins(u->getNumWins() + 1);
+    else u->setNumLost(u->getNumLost() + 1);
+    u->setNumPlayed();
+    
+    
   } else{
       cout << "Login failed\n";
   }
@@ -69,6 +79,7 @@ void User::signUp(){
   cout << "Enter your password: ";
   cin >> newUser.password;
   bool status = checkPass(newUser.password);
+  status = true;
   
   while (!status) {
     cout << "\nPassword does not fulfill requirements."<< endl;
@@ -276,19 +287,14 @@ int User::getNumLost() const {
 }
 
 //Setters
-void User::setNumPlayed(int numPlayed) {
-  numPlayed = 0;
-  numPlayed = numWins + numLost;
+void User::setNumPlayed() {
+    this->numPlayed = this->numLost + this->numWins;
 }
 
 void User::setNumWins(int numWins) {
-  // if(wIndx))
-  //     numWin++;
+    this->numWins = numWins;
 }
 
 void User::setNumLost(int numLost) {
-  /*
-      if(player !win)
-        numLost++;
-  */
+    this->numLost = numLost;
 }

@@ -32,7 +32,7 @@ class User : public Serializable{
     int getNumLost() const;
 
     //Set the information obtained
-    void setNumPlayed(int /*numPlayed*/);
+    void setNumPlayed();
     void setNumWins(int /*numWins*/);
     void setNumLost(int /*numLost*/);
 
