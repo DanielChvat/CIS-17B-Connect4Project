@@ -62,4 +62,4 @@ class User : public Serializable{
 
 };
 
-#endif  
+#endif
