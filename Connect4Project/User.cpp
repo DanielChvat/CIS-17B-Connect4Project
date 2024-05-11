@@ -1,5 +1,6 @@
 #include "User.h"
 #include "Game.h"
+#include "Menu.h"
 #include "Computer.h"
 
 #include <iostream>
@@ -18,15 +19,17 @@ User::User(){ //set all values to null
   numWins = 0;
   numLost = 0;
   numPlayed = 0;
+  admin = false;
 }
 
-User::User(std::string name, std::string userName, std::string password, int nWins, int nLosses, int nPlayed){
+User::User(std::string name, std::string userName, std::string password, int nWins, int nLosses, int nPlayed, bool admin){
     this->name = name;
     this->userName = userName;
     this->password = password;
     this->numLost = nLosses;
     this->numPlayed = nPlayed;
     this->numWins = nWins;
+    this->admin = admin;
 }
 
 //Destructor
@@ -37,14 +40,15 @@ User::~User(){
 //Functions
 void User::logIn(){
   Database data("user.dat");
+  
   cout << "Enter your username: ";
   cin >> userName;
 
   cout << "Enter your password: ";
   cin >> password;
 
-  if(data.ValidateUser(userName, password)){
-    cout << "Login successful!\n";
+  if(data.ValidateUser(userName, password) && !data.FetchUser(userName)->isAdmin()){
+    cout << endl << "Login successful!\n";
     Game game;
     User *u = data.FetchUser(userName);
     
@@ -58,9 +62,11 @@ void User::logIn(){
     else u->setNumLost(u->getNumLost() + 1);
     u->setNumPlayed();
     
-    
-  } else{
-      cout << "Login failed\n";
+  } else if (data.ValidateUser(userName, password) && data.FetchUser(userName)->isAdmin()){
+      cout << endl << "Login successful!\n";
+      Menu::adminMenu();
+  }else{
+      cout << endl << "Login failed\n";
   }
  
   // BinFile binary;
@@ -244,7 +250,8 @@ void User::Load(Datastream *data){
     
     ReadFromBuf(buffer, (char *)&this->numWins, sizeof(int), cursor);
     ReadFromBuf(buffer, (char *)&this->numLost, sizeof(int), cursor);
-    ReadFromBuf(buffer, (char *)&this->numPlayed, sizeof(int), cursor);         
+    ReadFromBuf(buffer, (char *)&this->numPlayed, sizeof(int), cursor);  
+    ReadFromBuf(buffer, (char *)&this->admin, sizeof(bool), cursor);
 }
 
 Datastream User::Serialize(){
@@ -252,7 +259,7 @@ Datastream User::Serialize(){
     unsigned long UserNameSize = userName.size();
     unsigned long passwordSize = password.size();
     unsigned long cursor = 0L;
-    unsigned long recordSize = nameSize + UserNameSize + passwordSize + 3 * sizeof(unsigned long) + 3 * sizeof(int);
+    unsigned long recordSize = nameSize + UserNameSize + passwordSize + 3 * sizeof(unsigned long) + 3 * sizeof(int) + sizeof(bool);
     char *buffer = new char[recordSize + sizeof(unsigned long)];
     
     WriteToBuf(buffer, (const char *)&recordSize, sizeof(unsigned long), cursor);
@@ -265,6 +272,7 @@ Datastream User::Serialize(){
     WriteToBuf(buffer, (const char *)&this->numWins, sizeof(int), cursor);
     WriteToBuf(buffer, (const char *)&this->numLost, sizeof(int), cursor);
     WriteToBuf(buffer, (const char *)&this->numPlayed, sizeof(int), cursor);
+    WriteToBuf(buffer, (const char *)&this->admin, sizeof(bool), cursor);
 
      Datastream data(buffer, recordSize + sizeof(unsigned long));
      return data;

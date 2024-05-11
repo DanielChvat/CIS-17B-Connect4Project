@@ -8,7 +8,7 @@ class User : public Serializable{
   public:
     //Constructor
     User();
-    User(std::string, std::string, std::string, int, int, int);
+    User(std::string, std::string, std::string, int, int, int, bool);
 
     //Destructor
     ~User();
@@ -43,9 +43,10 @@ class User : public Serializable{
     bool checkPass(const std::string &); /*Check if password for new users meets password requirements 
   - returns true if password is valid, false if not
 */
+    bool isAdmin(){return this->admin;}
     Datastream Serialize();
     void Load(Datastream *);
-
+    
     friend Database;
 
   private:
@@ -59,6 +60,8 @@ class User : public Serializable{
         numWins,
         numLost,
         numPlayed;
+    
+    bool admin;
 
 };
 

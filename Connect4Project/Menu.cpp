@@ -31,7 +31,7 @@ Menu::~Menu() {
 }
 
 
-int Menu::welPage(){
+void Menu::welPage(){
   User user;
   
   
@@ -39,7 +39,7 @@ int Menu::welPage(){
   while (choice != 3){
     cout << "WELCOME PAGE" << endl;
     cout << "1. Sign Up" << endl;
-    cout << "2. Log in" << endl; 
+    cout << "2. Log in (admin username: \"admin\", admin password: \"password\")" << endl; 
 //    cout << "3. Leaderboard" << endl;
     cout << "3. Sign Out" << endl;
     cout << "Enter your choice: ";
@@ -52,7 +52,6 @@ int Menu::welPage(){
         user.signUp();
         goto case2;
         
-        //startGame();
         break;
       case 2:
         case2:
@@ -63,22 +62,38 @@ int Menu::welPage(){
         //sign out 
         user.logOut();
         break;
-    default:
-        return 0;
-            
     }
   }
-  return choice;
 }
 
-void Menu::startGame(){
-  Game game;
-  game.addPlayer(*new Computer(*new Chip('c')));
-  game.addPlayer(*new Computer(*new Chip('d')));
-  game.run();
+void Menu::adminMenu(){
+    char choice;
+    do{
+        cout << "ADMIN VIEW" << endl;
+        cout << "1. View Users" << endl;
+        cout << "2. Edit User" << endl;
+        cout << "3. Exit" << endl;
+        
+        cin >> choice;
+        
+        switch(choice){
+            case '1': Menu::displayUsers();break;
+            case '2': break;
+        }
+    }while(choice != '3');
+    
+}
 
-  // Win callback test
-  game.registerWinCallback([](const Player* player){
-    std::cout << "Chip color: " << player->getChip().getColor() << std::endl;
-  });
+void Menu::displayUsers(){
+    Database data("user.dat");
+    for(int i = 0; i < data.UserCount(); i++){
+        User *u = data.FetchUser(i);
+        cout << "User " << i + 1 << endl;
+        cout << "Username    : " << u->getUserName() << endl;
+        cout << "Password    : " << u->getPassword() << endl;
+        cout << "Admin       : " << (u->isAdmin()?"Yes":"No") << endl;
+        cout << "Wins        : " << u->getNumWins() << endl;
+        cout << "Losses      : " << u->getNumLost() << endl;
+        cout << "Games Played: " << u->getNumPlayed() << endl << endl;
+    }
 }

@@ -46,6 +46,7 @@ public:
     void EditUser(std::string name = "", std::string Username = "", std::string password = "", User *user = nullptr);
     void WriteRecords();
     User *FetchUser(std::string);
+    User *FetchUser(int);
     long UserCount() {return nRecords;}
 private:
     std::fstream UserFile;

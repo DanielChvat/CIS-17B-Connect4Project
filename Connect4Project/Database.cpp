@@ -78,6 +78,10 @@ User *Database::FetchUser(std::string UserName) {
   return nullptr;
 }
 
+User *Database::FetchUser(int n){
+    return &this->Records[n];
+}
+
 bool Database::ValidateUser(std::string UserName, std::string Password) {
   User *temp = FetchUser(UserName);
   
