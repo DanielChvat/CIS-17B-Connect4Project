@@ -1,0 +1,44 @@
+\hypertarget{classComputer}{}\doxysection{Computer Class Reference}
+\label{classComputer}\index{Computer@{Computer}}
+
+
+Inheritance diagram for Computer\+:
+% FIG 0
+
+
+Collaboration diagram for Computer\+:
+% FIG 1
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classComputer_acbfb65caa13ecd72e1bbe09bb6c65b0c}\label{classComputer_acbfb65caa13ecd72e1bbe09bb6c65b0c}} 
+{\bfseries Computer} (\mbox{\hyperlink{classChip}{Chip}} \&)
+\item 
+\mbox{\Hypertarget{classComputer_a7babad09f1039303e65467aba58d5954}\label{classComputer_a7babad09f1039303e65467aba58d5954}} 
+int {\bfseries r\+Turn} (\mbox{\hyperlink{classBoard}{Board}} $\ast$)
+\item 
+\mbox{\Hypertarget{classComputer_afad7ba57c636692572985f780ee9a14d}\label{classComputer_afad7ba57c636692572985f780ee9a14d}} 
+virtual int {\bfseries tk\+Turn} (\mbox{\hyperlink{classBoard}{Board}} $\ast$b) override
+\item 
+\mbox{\Hypertarget{classComputer_ac0403f7bae663c5944e72b48a3c27661}\label{classComputer_ac0403f7bae663c5944e72b48a3c27661}} 
+int {\bfseries c\+Turn} (\mbox{\hyperlink{classBoard}{Board}} $\ast$)
+\item 
+\mbox{\Hypertarget{classComputer_a30d841633dbb196db5693db61ab59246}\label{classComputer_a30d841633dbb196db5693db61ab59246}} 
+int {\bfseries checkH} (\mbox{\hyperlink{classBoard}{Board}} $\ast$, int)
+\item 
+\mbox{\Hypertarget{classComputer_aaa83afbd2867456614d5e06ab5a029c0}\label{classComputer_aaa83afbd2867456614d5e06ab5a029c0}} 
+int {\bfseries checkV} (\mbox{\hyperlink{classBoard}{Board}} $\ast$, int)
+\item 
+\mbox{\Hypertarget{classComputer_a04896d6ee181fcba7260a1f342068cea}\label{classComputer_a04896d6ee181fcba7260a1f342068cea}} 
+int {\bfseries checkD} (\mbox{\hyperlink{classBoard}{Board}} $\ast$, int)
+\item 
+\mbox{\Hypertarget{classComputer_a3b7e7f4c5a4a7e74e2c854d3814816ee}\label{classComputer_a3b7e7f4c5a4a7e74e2c854d3814816ee}} 
+void {\bfseries delay\+Output} (int delay\+Sec)
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Computer.\+h\item 
+Computer.\+cpp\end{DoxyCompactItemize}

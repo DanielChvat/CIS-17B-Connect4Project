@@ -1,0 +1,98 @@
+\hypertarget{classGame}{}\doxysection{Game Class Reference}
+\label{classGame}\index{Game@{Game}}
+
+
+Encapsulates Connect4 game logic.  
+
+
+
+
+{\ttfamily \#include $<$Game.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classGame_a7a1b5c9c721eea524ad0c61d7f060b39}\label{classGame_a7a1b5c9c721eea524ad0c61d7f060b39}} 
+void {\bfseries run} () noexcept
+\item 
+void \mbox{\hyperlink{classGame_ad1520fb7527980c0c71070da084e4ca3}{add\+Player}} (\mbox{\hyperlink{classPlayer}{Player}} \&player)
+\item 
+const std\+::function$<$ void(const \mbox{\hyperlink{classPlayer}{Player}} $\ast$)$>$ $\ast$ \mbox{\hyperlink{classGame_ab1e04f897086596fcb5a3b5e231bae06}{register\+Win\+Callback}} (std\+::function$<$ void(const \mbox{\hyperlink{classPlayer}{Player}} $\ast$)$>$ callback) noexcept
+\item 
+\mbox{\hyperlink{classPlayer}{Player}} $\ast$ \mbox{\hyperlink{classGame_aee0292be88f4fb4fdf560f289d663b04}{get\+Player}} (char c) const noexcept
+\item 
+\mbox{\Hypertarget{classGame_a8360726ddaf33e475e4cd81393f39bfc}\label{classGame_a8360726ddaf33e475e4cd81393f39bfc}} 
+\mbox{\hyperlink{classPlayer}{Player}} $\ast$ {\bfseries get\+Cur\+Player} () const noexcept
+\item 
+\mbox{\Hypertarget{classGame_aa45916a87f0b14e2a0080e180021eca3}\label{classGame_aa45916a87f0b14e2a0080e180021eca3}} 
+const Settings $\ast$ {\bfseries get\+Settings} () const noexcept
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classGame_ab38f74b339337f4ee04893ee6671b488}\label{classGame_ab38f74b339337f4ee04893ee6671b488}} 
+friend {\bfseries Setup\+State}
+\item 
+\mbox{\Hypertarget{classGame_a01e665931fa6495ddb12cb0f625b520b}\label{classGame_a01e665931fa6495ddb12cb0f625b520b}} 
+friend {\bfseries Turn\+State}
+\item 
+\mbox{\Hypertarget{classGame_a86bfa3755d489c9223c6bb3cdf34e76a}\label{classGame_a86bfa3755d489c9223c6bb3cdf34e76a}} 
+friend {\bfseries End\+State}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Encapsulates Connect4 game logic. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classGame_ad1520fb7527980c0c71070da084e4ca3}\label{classGame_ad1520fb7527980c0c71070da084e4ca3}} 
+\index{Game@{Game}!addPlayer@{addPlayer}}
+\index{addPlayer@{addPlayer}!Game@{Game}}
+\doxysubsubsection{\texorpdfstring{addPlayer()}{addPlayer()}}
+{\footnotesize\ttfamily void Game\+::add\+Player (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{classPlayer}{Player}} \&}]{player }\end{DoxyParamCaption})}
+
+Add a player to the game. Cannot be called during a game.
+
+Used to add players to the game before the game session starts or after a game session ends. If the player array is not empty, such as after a call to this function, the game will skip player setup. Throws an exception if a game is currently running. 
+\begin{DoxyParams}{Parameters}
+{\em player} & \mbox{\hyperlink{classPlayer}{Player}} instance to be added to the game. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classGame_aee0292be88f4fb4fdf560f289d663b04}\label{classGame_aee0292be88f4fb4fdf560f289d663b04}} 
+\index{Game@{Game}!getPlayer@{getPlayer}}
+\index{getPlayer@{getPlayer}!Game@{Game}}
+\doxysubsubsection{\texorpdfstring{getPlayer()}{getPlayer()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classPlayer}{Player}} $\ast$ Game\+::get\+Player (\begin{DoxyParamCaption}\item[{char}]{c }\end{DoxyParamCaption}) const\hspace{0.3cm}{\ttfamily [noexcept]}}
+
+Searches for \mbox{\hyperlink{classPlayer}{Player}} with \mbox{\hyperlink{classChip}{Chip}} color matching c.
+
+
+\begin{DoxyParams}{Parameters}
+{\em c} & \mbox{\hyperlink{classPlayer}{Player}}\textquotesingle{}s \mbox{\hyperlink{classChip}{Chip}} color \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+\mbox{\hyperlink{classPlayer}{Player}} or nullptr if no \mbox{\hyperlink{classPlayer}{Player}} has Color c 
+\end{DoxyReturn}
+\mbox{\Hypertarget{classGame_ab1e04f897086596fcb5a3b5e231bae06}\label{classGame_ab1e04f897086596fcb5a3b5e231bae06}} 
+\index{Game@{Game}!registerWinCallback@{registerWinCallback}}
+\index{registerWinCallback@{registerWinCallback}!Game@{Game}}
+\doxysubsubsection{\texorpdfstring{registerWinCallback()}{registerWinCallback()}}
+{\footnotesize\ttfamily const std\+::function$<$void(const \mbox{\hyperlink{classPlayer}{Player}}$\ast$)$>$$\ast$ Game\+::register\+Win\+Callback (\begin{DoxyParamCaption}\item[{std\+::function$<$ void(const \mbox{\hyperlink{classPlayer}{Player}} $\ast$)$>$}]{callback }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [noexcept]}}
+
+Registers callback to be called when win event is raised.
+
+The win event is raised when a player wins and the game ends. The winning player is passed as an argument. 
+\begin{DoxyParams}{Parameters}
+{\em callback} & Function object to be called when a player wins. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Pointer to registered callback 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Game.\+h\item 
+Game.\+cpp\end{DoxyCompactItemize}
